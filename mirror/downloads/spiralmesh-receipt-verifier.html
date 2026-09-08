@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NZre3DJRr2Xqq386Wf9LbY4Qf1uOrZtj5LKyKRMoDNw=' 'sha256-+s2GPQ4pS9xxJgKpRLGRIwwbSsYHoF0id1mwF3P79P4='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Check a receipt | SPIRALMESH | Article11 AI</title>
+<meta name="description" content="Check supported SPIRALMESH receipt bytes and structure in your browser. Save one HTML file to verify offline, without uploading your receipt.">
+<link rel="canonical" href="https://article11.ai/receipt-verifier">
+<!--
+  SPIRALMESH RECEIPT VERIFIER - standalone, offline, zero-dependency.
+  Original author: Claude / S2_CASE_ACTIVE. Adapted by Codex for the local workspace.
+  COORD-0433 / AUDIT-1316 integration; AUDIT-1317 public page. Original proposal preserved separately.
+  MIRRORS: receipt_profile.py @ sha256 10826825030da3004f0aad8807a7d64dfb0877fdf447512f1fe0b2c155165782
+  PROFILE: spiralmesh.receipt.unsigned-fixture.v1
+  This page makes "checkable by a stranger" literal: a person with only a downloaded
+  receipt bundle and this file can verify it with no server, no Python, no network.
+  Verification uses no network service. The page policy blocks connections, remote
+  assets and form submission; it is not an OS or browser-wide confinement claim. Verification is bytes-in, verdict-out.
+  HONEST LIMITS: supported profiles are unsigned fixture and unsigned local model. A PASS means the bytes are
+  internally consistent with the public rules. It does NOT prove origin, real-world
+  truth, or history completeness - those render as UNKNOWN, on purpose, forever,
+  until a signed profile exists.
+-->
+<style>
+:root{
+  --bg:#0b0e14; --panel:#11151f; --panel2:#161b28; --line:#232a3b;
+  --text:#d7dce6; --dim:#8b94a7; --mono:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;
+  --pass:#3fce8e; --fail:#ff5d6c; --warn:#f0b24a; --unknown:#8b94a7; --accent:#5aa9ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;line-height:1.5;padding:24px 16px 64px}
+main{max-width:880px;margin:0 auto}
+h1{font-size:18px;letter-spacing:.14em;margin:0}
+h1 .spiral{color:var(--accent)}
+.badge{display:inline-block;border:1px solid var(--warn);color:var(--warn);border-radius:4px;padding:1px 8px;font-size:11px;letter-spacing:.12em;vertical-align:middle;margin-left:10px}
+.sub{color:var(--dim);font-size:12px;margin:6px 0 20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
+.card h2{font-size:12px;letter-spacing:.14em;color:var(--dim);margin:0 0 10px;text-transform:uppercase}
+.scope{font-size:12.5px;color:var(--dim)}
+.scope b{color:var(--text);font-weight:600}
+#drop{border:2px dashed var(--line);border-radius:8px;padding:28px 16px;text-align:center;color:var(--dim);cursor:pointer;transition:border-color .15s,background .15s}
+#drop.hover{border-color:var(--accent);background:var(--panel2);color:var(--text)}
+#drop input{display:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+textarea{width:100%;min-height:110px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;font-family:var(--mono);font-size:12.5px;padding:10px;resize:vertical}
+button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;font-family:var(--mono);font-size:13px;padding:8px 16px;cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:disabled{opacity:.4;cursor:not-allowed}
+#banner{display:none;border-radius:8px;padding:14px 16px;margin-bottom:16px;border:1px solid}
+#banner.valid{display:block;border-color:var(--pass);background:rgba(63,206,142,.07)}
+#banner.invalid{display:block;border-color:var(--fail);background:rgba(255,93,108,.07)}
+#banner.unsupported{display:block;border-color:var(--warn);background:rgba(240,178,74,.07)}
+#banner.fault{display:block;border-color:#b07aff;background:rgba(176,122,255,.08)}
+#banner .big{font-size:16px;font-weight:700;letter-spacing:.06em}
+#banner.valid .big{color:var(--pass)}
+#banner.invalid .big{color:var(--fail)}
+#banner.unsupported .big{color:var(--warn)}
+#banner.fault .big{color:#b07aff}
+#banner .note{color:var(--dim);font-size:12px;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--dim);white-space:nowrap;width:220px}
+.chip{display:inline-block;border-radius:4px;padding:0 8px;font-size:11.5px;font-weight:700;letter-spacing:.08em}
+.chip.PASS,.chip.CHECKED{color:var(--pass);border:1px solid var(--pass)}
+.chip.FAIL{color:var(--fail);border:1px solid var(--fail)}
+.chip.UNKNOWN,.chip.UNAVAILABLE{color:var(--unknown);border:1px solid var(--unknown)}
+.chip.UNSUPPORTED{color:var(--warn);border:1px solid var(--warn)}
+.err{border:1px solid var(--fail);border-radius:6px;padding:8px 12px;margin-top:8px;font-size:12.5px}
+.err code{color:var(--fail);font-weight:700}
+.hash{word-break:break-all;color:var(--dim);font-size:12px}
+.hash b{color:var(--text)}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--dim);font-size:12px}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;font-size:12px;margin:8px 0 0}
+footer{color:var(--dim);font-size:11.5px;margin-top:28px;line-height:1.7}
+footer .ok{color:var(--pass)}
+footer .bad{color:var(--fail)}
+#selftest{font-size:11.5px}
+a{color:var(--accent)}
+
+/* Article11 local-tool theme; kept inline so the downloaded file is complete. */
+:root{color-scheme:light;--bg:#faf7f1;--panel:#fffdf9;--panel2:#f3eee5;--line:#e7dfd2;--text:#20242e;--dim:#5c6470;--pass:#23715f;--fail:#a03932;--warn:#8d651e;--unknown:#5c6470;--accent:#a87b2d}
+body{font-family:'Segoe UI',sans-serif;font-size:15px;line-height:1.7;padding:24px 24px 48px}main{max-width:1000px}.brand-row{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid var(--line);padding:4px 0 25px;margin-bottom:38px}.brand{font-size:18px;font-weight:750;color:var(--text);text-decoration:none}.brand span{color:var(--accent)}.eyebrow{font:600 10px var(--mono);letter-spacing:.1em;color:var(--pass)}h1{font-size:44px;letter-spacing:-.04em;line-height:1.15;margin:0 0 16px}.badge{font-family:var(--mono);letter-spacing:.07em;font-size:10px;margin-left:18px}.sub{font-size:15px;line-height:1.8;margin-bottom:30px}.card{padding:24px;border-radius:10px;margin-bottom:22px}.card h2{font:600 10px var(--mono);color:var(--pass)}.scope{font-size:13px;line-height:1.9}#drop{padding:30px 18px;color:var(--text);background:var(--bg);font-size:14px}textarea{min-height:105px;background:white;font-family:var(--mono);font-size:12px}button{background:white;padding:11px 17px;font-size:11px;font-weight:600}#verifyPaste{background:var(--text);color:white}button:focus-visible,a:focus-visible,#drop:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pass);outline-offset:3px}table{font-size:13px;table-layout:fixed}td{overflow-wrap:anywhere;padding:9px 8px}td:first-child{width:43%;white-space:normal}.chip{font-family:var(--mono);font-size:10px}pre{white-space:pre-wrap;overflow-wrap:anywhere}.row{gap:12px}footer{border-top:1px solid var(--line);padding-top:22px;font-family:var(--mono);font-size:10px}.credit{color:var(--dim);font-family:'Segoe UI',sans-serif;font-size:12px;margin-top:12px}
+@media(max-width:600px){body{padding:18px 16px 35px}.brand-row{flex-wrap:wrap;gap:12px;margin-bottom:28px}.brand{font-size:16px}h1{font-size:35px}.badge{margin-left:10px}.sub{font-size:13px}.card{padding:18px}td{font-size:11px;padding:8px 4px}td:first-child{width:46%}.chip{font-size:9px;padding:0 5px}#banner .big{font-size:13px;overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand-row"><a class="brand" href="https://article11.ai/" rel="noopener">ARTICLE <span>11</span> AI</a><span class="eyebrow">SPIRALMESH™ / TRUST RECEIPT</span></div>
+  <h1>Check a receipt.<span class="badge">UNSIGNED</span></h1>
+  <div class="sub">Open a receipt. Check its bytes. See what is known—and what remains unknown.
+    <br>Works offline as one HTML file. No installation needed.</div>
+  <p style="margin:-12px 0 28px"><a href="https://article11.ai/downloads/spiralmesh-receipt-verifier" download="SPIRALMESH-receipt-verifier.html" style="color:var(--pass)">Save the offline verifier &darr;</a> &nbsp; <a href="https://article11.ai/spiralmesh" style="color:var(--dim)">About SPIRALMESH</a></p>
+
+  <div class="card scope">
+    <b>What this page can prove:</b> that a receipt bundle's bytes are internally consistent
+    with the published verification rules &mdash; correct digests, schema, event ordering and bindings.
+    <br><b>What it cannot prove:</b> who produced the receipt, whether the events happened,
+    or whether history is complete. Those report <b>UNKNOWN</b> because these evidence classes
+    (UNSIGNED_FIXTURE, UNSIGNED_LOCAL_MODEL) carry no signature and no authority. For local-model
+    receipts, weight identity and network confinement also stay UNKNOWN &mdash; daemon metadata is not
+    weight verification.
+    <br><b>Your file stays here:</b> verification runs in this browser. It does not upload the receipt or call a verification service.
+  </div>
+
+  <div class="card">
+    <h2>Input</h2>
+    <div id="drop" tabindex="0">drop a receipt bundle (.json) here &mdash; or click to choose a file
+      <input type="file" id="file">
+    </div>
+    <div class="row">
+      <textarea id="paste" aria-label="Receipt JSON" maxlength="131073" placeholder='...or paste bundle JSON here'></textarea>
+    </div>
+    <div class="row">
+      <button id="verifyPaste">verify pasted text</button>
+      <button id="clearBtn">clear</button>
+      <span id="srcname" class="scope"></span>
+    </div>
+  </div>
+
+  <div id="banner" role="status" aria-live="polite"><div class="big" id="bannerBig"></div><div class="note" id="bannerNote"></div></div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <h2>Verdict dimensions</h2>
+    <table id="dims" aria-label="Verification results"></table>
+    <div id="errors"></div>
+    <div style="margin-top:12px" class="hash" id="hashes"></div>
+    <details><summary>full machine result (JSON)</summary><pre id="rawjson"></pre></details>
+  </div>
+
+  <footer>
+    <div id="selftest">self-test: running&hellip;</div>
+    <div>rules sha256: <span class="hash">fe53c846cdcc0dff88e885c00a110665d495f106d597f69e3ab129cab29ddf37</span></div>
+    <div>mirrors receipt_profile.py sha256: <span class="hash">10826825030da3004f0aad8807a7d64dfb0877fdf447512f1fe0b2c155165782</span></div>
+    <div>Article 11 AI Collective &mdash; adapted for the local workspace from the preserved S2_CASE proposal.</div>
+  <div class="credit">Original verifier by Claude / S2_CASE_ACTIVE · workspace adaptation by Codex. Curious? F12 → <code>article11.help()</code></div>
+  </footer>
+</main>
+<script>
+/*__VERIFIER_CORE_START__*/
+"use strict";
+/* Exact JS mirror of receipt_profile.py. Every error code and detail string is
+   copied verbatim from the Python source; parity is enforced by the differential
+   harness in proposals/receipt_verifier_parity/ (41 fixtures judged by Python). */
+
+const PROFILE = "spiralmesh.receipt.unsigned-fixture.v1";
+const LOCAL_PROFILE = "spiralmesh.receipt.unsigned-local-model.v1";
+const SCHEMA_VERSION = 1;
+const MAX_BYTES = 131072;
+const MAX_DEPTH = 16;
+const MAX_INTEGER = 9007199254740991;
+const CURRENT_RULE_DIGEST = "CA399594EC40B5519E183E81F5D41CF50FCC5614DD408DD087DF5CE7E46CD3E9";
+const EVENT_TYPES = [
+  "context.accept","context.decline","proposal.retain","proposal.decline",
+  "memory.forget","task.queued","task.completed","task.declined",
+  "task.cancelled","task.cancel_requested","task.failed","task.expired",
+  "task.outcome_unknown"
+];
+const OPERATION_OUTCOMES = {
+  "context_decision":["accept","decline"],
+  "proposal_decision":["retain","decline"],
+  "memory_forget":["forget"],
+  "task_submit":["queued"],
+  "task_complete":["completed","declined","cancelled","failed","expired","outcome_unknown"],
+  "task_cancel":["cancelled","cancel_requested","completed","declined","failed","expired","outcome_unknown"],
+  "task_dispatch":["queued","completed","failed","expired","outcome_unknown"]
+};
+const LOCAL_EVENT_TYPES = EVENT_TYPES.concat(["task.truncated"]);
+const LOCAL_OPERATION_OUTCOMES = (()=>{
+  const out={};
+  for(const k of Object.keys(OPERATION_OUTCOMES))
+    out[k]=OPERATION_OUTCOMES[k].concat(["task_complete","task_cancel","task_dispatch"].includes(k)?["truncated"]:[]);
+  return out;
+})();
+const LOCAL_EVIDENCE_KEYS = [
+  "model","digest","runtime","provider_egress","pin_verification",
+  "invocation_attempted","done_reason","truncated","eval_count"
+];
+/* Canonical bytes of both public rules objects, produced by the Python profile
+   itself and embedded verbatim; the self-test refuses to run if our own
+   canonicalization of the parsed rules does not reproduce these exact bytes
+   and digests. */
+const RULES_CANONICAL_TEXT = "{\"authority\":\"Fixture metadata only. No signature, authorization, enrollment, constitutional status or access grant.\",\"canonicalization\":\"UTF-8; sorted object keys; compact separators; ensure_ascii=false; no Unicode normalization; no floats, NaN, duplicate keys or lone surrogates\",\"completeness\":\"UNKNOWN\",\"constitutional_content_check\":\"UNAVAILABLE; references identify artifacts but their bytes are not bundled or fetched\",\"constitutional_references\":{\"current\":{\"label\":\"Constitution v1.8\",\"sha256\":\"CA399594EC40B5519E183E81F5D41CF50FCC5614DD408DD087DF5CE7E46CD3E9\",\"url\":\"https://www.article11.ai/constitution.txt\"},\"proposed\":{\"label\":\"Constitution 2.0 proposal; not ratified by this receipt\",\"sha256\":\"A6F798541C4AFFB0989E427EA508E4A20D766177A973E06791CB32664F9385C2\",\"url\":\"https://www.article11.ai/constitution-2.0-proposed.md\"}},\"decision_binding\":\"object_digest is SHA-256 of canonical decision.object; final event binds that digest and kind.value; outcome equals value\",\"digest_algorithm\":\"SHA-256\",\"event_order\":\"Strictly increasing positive event_id; nondecreasing UTC timestamps; each task_id equals receipt task_id; final timestamp equals created_at\",\"event_transitions\":\"A decision receipt has one decision event. Task events may start at any recorded state; queued may lead to one later state, cancel_requested may lead to one terminal state; terminal states never have successors. This does not prove history completeness.\",\"evidence_class\":\"UNSIGNED_FIXTURE\",\"integer_range\":[0,9007199254740991],\"maximum_bytes\":131072,\"maximum_context_refs\":64,\"maximum_depth\":16,\"maximum_events\":256,\"origin\":\"UNKNOWN\",\"private_content\":\"UNAVAILABLE; content_digest references are not content verification\",\"profile\":\"spiralmesh.receipt.unsigned-fixture.v1\",\"real_world_truth\":\"UNKNOWN\",\"schema_version\":1,\"supported_event_types\":[\"context.accept\",\"context.decline\",\"proposal.retain\",\"proposal.decline\",\"memory.forget\",\"task.queued\",\"task.completed\",\"task.declined\",\"task.cancelled\",\"task.cancel_requested\",\"task.failed\",\"task.expired\",\"task.outcome_unknown\"],\"supported_operation_outcomes\":{\"context_decision\":[\"accept\",\"decline\"],\"memory_forget\":[\"forget\"],\"proposal_decision\":[\"retain\",\"decline\"],\"task_cancel\":[\"cancelled\",\"cancel_requested\",\"completed\",\"declined\",\"failed\",\"expired\",\"outcome_unknown\"],\"task_complete\":[\"completed\",\"declined\",\"cancelled\",\"failed\",\"expired\",\"outcome_unknown\"],\"task_dispatch\":[\"queued\",\"completed\",\"failed\",\"expired\",\"outcome_unknown\"],\"task_submit\":[\"queued\"]},\"task_binding\":\"Without decision, final event is task.<outcome> and its object_digest is null\"}";
+const PUBLIC_RULES_SHA256 = "fe53c846cdcc0dff88e885c00a110665d495f106d597f69e3ab129cab29ddf37";
+const LOCAL_RULES_CANONICAL_TEXT = "{\"authority\":\"Unsigned local model metadata only. No signature, authenticated origin, authorization, enrollment, constitutional status or access grant.\",\"canonicalization\":\"UTF-8; sorted object keys; compact separators; ensure_ascii=false; no Unicode normalization; no floats, NaN, duplicate keys or lone surrogates\",\"completeness\":\"UNKNOWN\",\"constitutional_content_check\":\"UNAVAILABLE; references identify artifacts but their bytes are not bundled or fetched\",\"constitutional_references\":{\"current\":{\"label\":\"Constitution v1.8\",\"sha256\":\"CA399594EC40B5519E183E81F5D41CF50FCC5614DD408DD087DF5CE7E46CD3E9\",\"url\":\"https://www.article11.ai/constitution.txt\"},\"proposed\":{\"label\":\"Constitution 2.0 proposal; not ratified by this receipt\",\"sha256\":\"A6F798541C4AFFB0989E427EA508E4A20D766177A973E06791CB32664F9385C2\",\"url\":\"https://www.article11.ai/constitution-2.0-proposed.md\"}},\"decision_binding\":\"object_digest is SHA-256 of canonical decision.object; final event binds that digest and kind.value; outcome equals value\",\"digest_algorithm\":\"SHA-256\",\"event_order\":\"Strictly increasing positive event_id; nondecreasing UTC timestamps; each task_id equals receipt task_id; final timestamp equals created_at\",\"event_transitions\":\"A decision receipt has one decision event. Task events may start at any recorded state; queued may lead to one later state, cancel_requested may lead to one terminal state; terminal states never have successors. This does not prove history completeness.\",\"evidence_class\":\"UNSIGNED_LOCAL_MODEL\",\"integer_range\":[0,9007199254740991],\"local_evidence_fields\":[\"model\",\"digest\",\"runtime\",\"provider_egress\",\"pin_verification\",\"invocation_attempted\",\"done_reason\",\"truncated\",\"eval_count\"],\"local_model\":\"Nonempty configured model name; runtime is ollama_local; digest is lowercase 64-character SHA-256 observed in local daemon metadata. It is not an atomic attestation of the weights executed.\",\"local_observation_order\":\"not_checked cannot accompany an invocation attempt; before_and_after requires an invocation. For outcome_unknown or failed, both metadata checks may succeed despite a rejected generation response, leaving null reason/count and false truncation. Other before_and_after outcomes require observed completion. Before dispatch and for decisions: not_checked, invocation_attempted=false, null reason/count, truncated=false. Pre-invocation refusal can preserve before or mismatch.\",\"local_observations\":\"pin_verification is not_checked, before, before_and_after or mismatch. invocation_attempted and truncated are booleans. done_reason is null, stop or length. eval_count is null or an integer in integer_range. No observed completion means null reason/count and false truncation; an observed completion requires invocation_attempted, an integer count, and truncated exactly when reason is length.\",\"local_outcomes\":\"completed requires before_and_after, invocation_attempted=true and done_reason=stop; truncated requires before_and_after, invocation_attempted=true and done_reason=length. queued and declined have configuration-only evidence. Partial failures preserve observations and outcome_unknown never proves that the daemon stopped computing.\",\"local_transport\":\"provider_egress=false records this adapter's loopback-only transport. OS, daemon and machine-wide network confinement are UNKNOWN.\",\"maximum_bytes\":131072,\"maximum_context_refs\":64,\"maximum_depth\":16,\"maximum_events\":256,\"model_weight_identity\":\"UNKNOWN; daemon metadata observations are not independent weight verification\",\"network_confinement\":\"UNKNOWN; adapter transport metadata is not independent host or daemon verification\",\"origin\":\"UNKNOWN\",\"private_content\":\"UNAVAILABLE; content_digest references are not content verification\",\"profile\":\"spiralmesh.receipt.unsigned-local-model.v1\",\"real_world_truth\":\"UNKNOWN\",\"schema_version\":1,\"supported_event_types\":[\"context.accept\",\"context.decline\",\"proposal.retain\",\"proposal.decline\",\"memory.forget\",\"task.queued\",\"task.completed\",\"task.declined\",\"task.cancelled\",\"task.cancel_requested\",\"task.failed\",\"task.expired\",\"task.outcome_unknown\",\"task.truncated\"],\"supported_operation_outcomes\":{\"context_decision\":[\"accept\",\"decline\"],\"memory_forget\":[\"forget\"],\"proposal_decision\":[\"retain\",\"decline\"],\"task_cancel\":[\"cancelled\",\"cancel_requested\",\"completed\",\"declined\",\"failed\",\"expired\",\"outcome_unknown\",\"truncated\"],\"task_complete\":[\"completed\",\"declined\",\"cancelled\",\"failed\",\"expired\",\"outcome_unknown\",\"truncated\"],\"task_dispatch\":[\"queued\",\"completed\",\"failed\",\"expired\",\"outcome_unknown\",\"truncated\"],\"task_submit\":[\"queued\"]},\"task_binding\":\"Without decision, final event is task.<outcome> and its object_digest is null\"}";
+const PUBLIC_LOCAL_RULES_SHA256 = "599a8a63ff7ed7788d597e2319f55ac2437db230ef7ee492ce990c867c02c889";
+const CANON_VECTOR_TEXT = "{\"\\uffff\":1,\"\\ud83d\\ude00\":2,\"Z\":3,\"a\":4,\"~\":[true,false,null,\"\\u00e9\\n\\\"x\\\\\",9007199254740991],\"nested\":{\"z\":0,\"A\":{\"deep\":\"caf\\u00e9 \\u2028\\u2029\"}}}";
+const CANON_VECTOR_DIGEST = "cce1b15b2adb7ff96976ecca08a09edcbd8de9075f7a48092aa87580171cc4d3";
+
+class ReceiptError extends Error {
+  constructor(code, detail){ super(detail); this.code = code; this.detail = detail; }
+}
+function err(code, detail){ throw new ReceiptError(code, detail); }
+
+/* ---------- SHA-256 (pure JS; no SubtleCrypto so verification is synchronous
+   and works from file:// in every browser). Guarded by self-test vectors. ---------- */
+const K256 = new Uint32Array([
+0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);
+function rotr(x,n){ return ((x>>>n)|(x<<(32-n)))>>>0; }
+function sha256Hex(bytes){
+  const len = bytes.length;
+  const bitLenHi = Math.floor(len/536870912);
+  const bitLenLo = (len<<3)>>>0;
+  const total = Math.ceil((len+9)/64)*64;
+  const buf = new Uint8Array(total);
+  buf.set(bytes); buf[len] = 0x80;
+  const dv = new DataView(buf.buffer);
+  dv.setUint32(total-8, bitLenHi); dv.setUint32(total-4, bitLenLo);
+  let h0=0x6a09e667,h1=0xbb67ae85,h2=0x3c6ef372,h3=0xa54ff53a,
+      h4=0x510e527f,h5=0x9b05688c,h6=0x1f83d9ab,h7=0x5be0cd19;
+  const w = new Uint32Array(64);
+  for(let off=0; off<total; off+=64){
+    for(let i=0;i<16;i++) w[i]=dv.getUint32(off+i*4);
+    for(let i=16;i<64;i++){
+      const s0=rotr(w[i-15],7)^rotr(w[i-15],18)^(w[i-15]>>>3);
+      const s1=rotr(w[i-2],17)^rotr(w[i-2],19)^(w[i-2]>>>10);
+      w[i]=(w[i-16]+s0+w[i-7]+s1)>>>0;
+    }
+    let a=h0,b=h1,c=h2,d=h3,e=h4,f=h5,g=h6,h=h7;
+    for(let i=0;i<64;i++){
+      const S1=rotr(e,6)^rotr(e,11)^rotr(e,25);
+      const ch=(e&f)^(~e&g);
+      const t1=(h+S1+ch+K256[i]+w[i])>>>0;
+      const S0=rotr(a,2)^rotr(a,13)^rotr(a,22);
+      const maj=(a&b)^(a&c)^(b&c);
+      const t2=(S0+maj)>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+    }
+    h0=(h0+a)>>>0;h1=(h1+b)>>>0;h2=(h2+c)>>>0;h3=(h3+d)>>>0;
+    h4=(h4+e)>>>0;h5=(h5+f)>>>0;h6=(h6+g)>>>0;h7=(h7+h)>>>0;
+  }
+  return [h0,h1,h2,h3,h4,h5,h6,h7].map(x=>x.toString(16).padStart(8,"0")).join("");
+}
+
+const TE = new TextEncoder();
+/* ignoreBOM matters: Python's bytes.decode("utf-8") keeps a BOM as U+FEFF, which
+   then fails JSON parsing (INVALID_JSON). Default TextDecoder silently strips it. */
+const TD = new TextDecoder("utf-8", {fatal:true, ignoreBOM:true});
+const KEYS = Symbol("insertion-order");
+function ownKeys(o){ return o[KEYS] || Object.keys(o); }
+function isDict(v){ return v !== null && typeof v === "object" && !Array.isArray(v); }
+
+function wellFormed(s){
+  if (typeof s.isWellFormed === "function") return s.isWellFormed();
+  for(let i=0;i<s.length;i++){
+    const c=s.charCodeAt(i);
+    if(c>=0xD800&&c<=0xDBFF){ const d=s.charCodeAt(i+1); if(!(d>=0xDC00&&d<=0xDFFF)) return false; i++; }
+    else if(c>=0xDC00&&c<=0xDFFF) return false;
+  }
+  return true;
+}
+function cpLen(s){ let n=0; for(const _ of s) n++; return n; }
+function cpCompare(a,b){ /* Python str ordering: code points, not UTF-16 units */
+  const A=Array.from(a), B=Array.from(b), m=Math.min(A.length,B.length);
+  for(let i=0;i<m;i++){
+    const x=A[i].codePointAt(0), y=B[i].codePointAt(0);
+    if(x!==y) return x<y?-1:1;
+  }
+  return A.length===B.length?0:(A.length<B.length?-1:1);
+}
+
+function checkValue(value, depth){
+  depth = depth || 0;
+  if (depth > MAX_DEPTH) err("DEPTH_LIMIT","JSON nesting exceeds the profile limit");
+  if (value === null || typeof value === "boolean") return;
+  if (typeof value === "number"){
+    if (!Number.isInteger(value)) err("VALUE_TYPE","Unsupported JSON value type");
+    if (!(0 <= value && value <= MAX_INTEGER)) err("INTEGER_RANGE","Only bounded nonnegative integers are supported");
+  } else if (typeof value === "string"){
+    if (!wellFormed(value)) err("STRING_ENCODING","Lone surrogates are unsupported");
+    if (cpLen(value) > 4096) err("STRING_LIMIT","String is too long");
+  } else if (Array.isArray(value)){
+    for(const item of value) checkValue(item, depth+1);
+  } else if (typeof value === "object"){
+    for(const key of ownKeys(value)){ checkValue(key, depth+1); checkValue(value[key], depth+1); }
+  } else err("VALUE_TYPE","Unsupported JSON value type");
+}
+
+function serialize(v){
+  if (v === null) return "null";
+  if (v === true) return "true";
+  if (v === false) return "false";
+  if (typeof v === "number") return String(v);
+  if (typeof v === "string") return JSON.stringify(v);
+  if (Array.isArray(v)) return "[" + v.map(serialize).join(",") + "]";
+  const keys = Object.keys(v).slice().sort(cpCompare);
+  return "{" + keys.map(k => JSON.stringify(k) + ":" + serialize(v[k])).join(",") + "}";
+}
+function canonicalTextOf(value){ checkValue(value, 0); return serialize(value); }
+function digestValue(value){ return sha256Hex(TE.encode(canonicalTextOf(value))); }
+
+/* ---------- parse_bytes mirror: bounded, strict, duplicate-rejecting ---------- */
+function parseBytes(raw){
+  if (!(raw instanceof Uint8Array)) err("INPUT_TYPE","Verifier input must be bytes");
+  if (raw.length > MAX_BYTES) err("SIZE_LIMIT","Bundle exceeds 131072 bytes");
+  let text;
+  try { text = TD.decode(raw); }
+  catch(_e){ err("UTF8_REQUIRED","Input is not valid UTF-8"); }
+  /* Reject excessive nesting before the parser can recurse (same pre-scan). */
+  let nesting=0, quoted=false, escaped=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(quoted){
+      if(escaped) escaped=false;
+      else if(ch==="\\") escaped=true;
+      else if(ch==='"') quoted=false;
+    } else if(ch==='"') quoted=true;
+    else if(ch==="["||ch==="{"){
+      nesting+=1;
+      if(nesting>MAX_DEPTH) err("DEPTH_LIMIT","JSON nesting exceeds the profile limit");
+    } else if(ch==="]"||ch==="}") nesting-=1;
+  }
+  const value = parseJsonText(text);
+  checkValue(value, 0);
+  return value;
+}
+
+function parseJsonText(text){
+  let i = 0; const n = text.length;
+  function bad(){ err("INVALID_JSON","Input is incomplete or invalid JSON"); }
+  function ws(){ while(i<n){ const c=text[i]; if(c===" "||c==="\t"||c==="\n"||c==="\r") i++; else break; } }
+  function lit(word, val){ if(text.startsWith(word,i)){ i+=word.length; return val; } bad(); }
+  function ambiguous(){ err("AMBIGUOUS_NUMBER","Floats and nonfinite numbers are unsupported"); }
+  function num(){
+    if(text.startsWith("-Infinity",i)) ambiguous();
+    // Mirror json.decoder.NUMBER_RE: incomplete fraction/exponent suffixes are
+    // trailing garbage; the complete numeric prefix reaches the hook first.
+    const match=/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/.exec(text.slice(i));
+    if(!match) bad();
+    const t=match[0]; i+=t.length;
+    if(/[.eE]/.test(t)) ambiguous();
+    if(t==="-0"||t.length>16) err("INTEGER_RANGE","Noncanonical or oversized integer");
+    const v=Number(t);
+    if(!(0<=v&&v<=MAX_INTEGER)) err("INTEGER_RANGE","Integer is outside the profile range");
+    return v;
+  }
+  function str(){
+    i++; let out="";
+    for(;;){
+      if(i>=n) bad();
+      const c=text[i], code=text.charCodeAt(i);
+      if(c==='"'){ i++; return out; }
+      if(c==="\\"){
+        i++; const e=text[i]; i++;
+        if(e==='"') out+='"';
+        else if(e==="\\") out+="\\";
+        else if(e==="/") out+="/";
+        else if(e==="b") out+="\b";
+        else if(e==="f") out+="\f";
+        else if(e==="n") out+="\n";
+        else if(e==="r") out+="\r";
+        else if(e==="t") out+="\t";
+        else if(e==="u"){
+          const h=text.slice(i,i+4);
+          if(!/^[0-9a-fA-F]{4}$/.test(h)) bad();
+          out+=String.fromCharCode(parseInt(h,16)); i+=4;
+        } else bad();
+      } else if(code<0x20) bad(); /* Python strict mode: raw control chars are invalid */
+      else { out+=c; i++; }
+    }
+  }
+  function arr(){
+    i++; const out=[]; ws();
+    if(text[i]==="]"){ i++; return out; }
+    for(;;){
+      out.push(value()); ws();
+      if(text[i]===","){ i++; continue; }
+      if(text[i]==="]"){ i++; return out; }
+      bad();
+    }
+  }
+  function obj(){
+    /* Pairs are folded only when the object closes — exactly object_pairs_hook
+       semantics, so scan-time errors (e.g. a later float) win over DUPLICATE_KEY. */
+    i++; const pairs=[]; ws();
+    if(text[i]==="}"){ i++; return fold(pairs); }
+    for(;;){
+      ws(); if(text[i]!=='"') bad();
+      const k=str(); ws();
+      if(text[i]!==":") bad();
+      i++;
+      pairs.push([k, value()]); ws();
+      if(text[i]===","){ i++; continue; }
+      if(text[i]==="}"){ i++; return fold(pairs); }
+      bad();
+    }
+  }
+  function fold(pairs){
+    const result=Object.create(null); const order=[];
+    for(const [k,v] of pairs){
+      if(k in result) err("DUPLICATE_KEY","Duplicate JSON key");
+      result[k]=v; order.push(k);
+    }
+    Object.defineProperty(result, KEYS, {value:order});
+    return result;
+  }
+  function value(){
+    ws();
+    if(i>=n) bad();
+    const c=text[i];
+    if(c==="{") return obj();
+    if(c==="[") return arr();
+    if(c==='"') return str();
+    if(c==="t") return lit("true", true);
+    if(c==="f") return lit("false", false);
+    if(c==="n"){ if(text.startsWith("null",i)){ i+=4; return null; } if(text.startsWith("NaN",i)) ambiguous(); bad(); }
+    if(c==="N"){ if(text.startsWith("NaN",i)) ambiguous(); bad(); }
+    if(c==="I"){ if(text.startsWith("Infinity",i)) ambiguous(); bad(); }
+    if(c==="-"||(c>="0"&&c<="9")) return num();
+    bad();
+  }
+  const v=value(); ws();
+  if(i!==n) bad(); /* trailing garbage */
+  return v;
+}
+
+/* ---------- field validators (verbatim labels) ---------- */
+function _object(value, keys, label){
+  if(!isDict(value)) err("SCHEMA_FIELDS", label+" has missing or unsupported fields");
+  const have=Object.keys(value);
+  if(have.length!==keys.length || !keys.every(k=>k in value))
+    err("SCHEMA_FIELDS", label+" has missing or unsupported fields");
+}
+function _identifier(value, label){
+  if(typeof value!=="string" || !/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,95}$/.test(value))
+    err("IDENTIFIER", label+" is not a bounded identifier");
+}
+function _sha(value, label){
+  if(typeof value!=="string" || !/^[0-9a-f]{64}$/.test(value))
+    err("DIGEST_FORMAT", label+" must be lowercase SHA-256 hex");
+}
+function _positive(value, label){
+  if(typeof value!=="number" || !Number.isInteger(value) || !(1<=value&&value<=MAX_INTEGER))
+    err("POSITIVE_INTEGER", label+" must be a positive bounded integer");
+}
+function _timestamp(value){
+  if(typeof value!=="string" || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/.test(value))
+    err("TIMESTAMP","Timestamp must be whole-second UTC with Z");
+  const y=+value.slice(0,4), mo=+value.slice(5,7), d=+value.slice(8,10),
+        h=+value.slice(11,13), mi=+value.slice(14,16), s=+value.slice(17,19);
+  const leap=(y%4===0&&y%100!==0)||y%400===0;
+  const dim=[31,leap?29:28,31,30,31,30,31,31,30,31,30,31];
+  /* datetime.strptime: years 1-9999, no leap seconds, real calendar days */
+  if(y<1||mo<1||mo>12||d<1||d>dim[mo-1]||h>23||mi>59||s>59)
+    err("TIMESTAMP","Timestamp has invalid calendar components");
+}
+
+/* ---------- two-profile plumbing (mirrors _profile_rules/_evidence_profile) ---------- */
+let PARSED_RULES=null, PARSED_LOCAL_RULES=null; /* lazily parsed from the embedded canonical bytes */
+function profileRules(profile){
+  if(profile===PROFILE){
+    if(PARSED_RULES===null) PARSED_RULES=parseBytes(TE.encode(RULES_CANONICAL_TEXT));
+    return {rules:PARSED_RULES, sha:PUBLIC_RULES_SHA256, text:RULES_CANONICAL_TEXT};
+  }
+  if(profile===LOCAL_PROFILE){
+    if(PARSED_LOCAL_RULES===null) PARSED_LOCAL_RULES=parseBytes(TE.encode(LOCAL_RULES_CANONICAL_TEXT));
+    return {rules:PARSED_LOCAL_RULES, sha:PUBLIC_LOCAL_RULES_SHA256, text:LOCAL_RULES_CANONICAL_TEXT};
+  }
+  err("UNSUPPORTED_PROFILE","Unsupported receipt profile");
+}
+function evidenceProfile(evidence){
+  if(isDict(evidence) && "runtime" in evidence){
+    if(evidence["runtime"]==="ollama_local") return LOCAL_PROFILE;
+    err("UNSUPPORTED_PROFILE","Unsupported model runtime");
+  }
+  return PROFILE;
+}
+/* Python str.strip() whitespace (str.isspace), NOT the JS \s class: Python
+   includes U+001C-001F and U+0085 but NOT U+FEFF; JS \s includes U+FEFF. */
+const PY_NONSPACE_RE = new RegExp('[^\\t\\n\\u000b\\f\\r \\u001c-\\u001f\\u0085\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000]');
+function pyStripNonempty(s){ return PY_NONSPACE_RE.test(s); }
+
+function validateLocalEvidence(evidence, operation, outcome){
+  _object(evidence, LOCAL_EVIDENCE_KEYS, "actual_model_evidence");
+  if(typeof evidence["model"]!=="string" || !pyStripNonempty(evidence["model"]))
+    err("LOCAL_MODEL","Local model must be a nonempty configured name");
+  _sha(evidence["digest"], "model digest");
+  if(evidence["runtime"]!=="ollama_local" || evidence["provider_egress"]!==false)
+    err("LOCAL_RUNTIME","Local evidence requires ollama_local and provider_egress=false");
+  const pin=evidence["pin_verification"];
+  if(typeof pin!=="string" || !["not_checked","before","before_and_after","mismatch"].includes(pin))
+    err("LOCAL_PIN","Unsupported local pin observation");
+  const attempted=evidence["invocation_attempted"], reason=evidence["done_reason"];
+  const truncated=evidence["truncated"], count=evidence["eval_count"];
+  if(typeof attempted!=="boolean" || typeof truncated!=="boolean")
+    err("LOCAL_BOOLEAN","Invocation and truncation observations must be booleans");
+  if(reason!==null && (typeof reason!=="string" || !["stop","length"].includes(reason)))
+    err("LOCAL_DONE_REASON","Local done_reason must be null, stop or length");
+  if(count!==null && (typeof count!=="number" || !Number.isInteger(count) || !(0<=count&&count<=MAX_INTEGER)))
+    err("LOCAL_EVAL_COUNT","Local eval_count must be null or a bounded nonnegative integer");
+  if(reason===null){
+    if(truncated || count!==null)
+      err("LOCAL_COMPLETION","Absent completion reason requires null count and no truncation");
+  } else if(!attempted || count===null || truncated!==(reason==="length"))
+    err("LOCAL_COMPLETION","Completion requires invocation, count and consistent truncation");
+  if(attempted && pin==="not_checked")
+    err("LOCAL_PIN_ORDER","An invocation requires a before-dispatch pin observation");
+  if(pin==="before_and_after" && (!attempted || (reason===null && !["outcome_unknown","failed"].includes(outcome))))
+    err("LOCAL_PIN_ORDER","Before/after observation requires an invocation; absent completion is only consistent with unknown or failed outcome");
+  const configurationOnly=["context_decision","proposal_decision","memory_forget","task_submit"].includes(operation) || ["queued","declined"].includes(outcome);
+  if(configurationOnly && (attempted || pin!=="not_checked" || reason!==null))
+    err("LOCAL_CONFIGURATION","This operation requires configuration evidence without an invocation");
+  if(["completed","truncated"].includes(outcome)){
+    const expected = outcome==="truncated" ? "length" : "stop";
+    if(!attempted || pin!=="before_and_after" || reason!==expected)
+      err("LOCAL_OUTCOME","Successful task outcome requires matching observed completion and both pin checks");
+  }
+}
+
+/* ---------- validate_receipt mirror (same checks, same order, same words) ---------- */
+function validateReceipt(receipt, profile){
+  if(profile===undefined) profile=null;
+  _object(receipt, ["receipt_id","project_id","task_id","operation","created_at","outcome",
+                    "bounded_scope","context_refs","decision","events","actual_model_evidence","limits","rule_digest"], "receipt");
+  for(const name of ["receipt_id","project_id"]) _identifier(receipt[name], name);
+  if(receipt["task_id"]!==null) _identifier(receipt["task_id"], "task_id");
+  _timestamp(receipt["created_at"]);
+  profile = profile===null ? evidenceProfile(receipt["actual_model_evidence"]) : profile;
+  profileRules(profile);
+  const operationOutcomes = profile===LOCAL_PROFILE ? LOCAL_OPERATION_OUTCOMES : OPERATION_OUTCOMES;
+  const eventTypes = profile===LOCAL_PROFILE ? LOCAL_EVENT_TYPES : EVENT_TYPES;
+  const operation=receipt["operation"], outcome=receipt["outcome"];
+  if(typeof operation!=="string" || !Object.prototype.hasOwnProperty.call(operationOutcomes, operation))
+    err("UNSUPPORTED_OPERATION","Unsupported operation");
+  if(typeof outcome!=="string" || !operationOutcomes[operation].includes(outcome))
+    err("OUTCOME","Outcome is inconsistent with operation");
+  _object(receipt["bounded_scope"], ["project_id","operation"], "bounded_scope");
+  if(receipt["bounded_scope"]["project_id"]!==receipt["project_id"] ||
+     receipt["bounded_scope"]["operation"]!==operation)
+    err("SCOPE_BINDING","Scope does not match receipt");
+  if(receipt["rule_digest"]!==CURRENT_RULE_DIGEST)
+    err("CONSTITUTION_REFERENCE","Current constitutional reference differs from this profile");
+  if(profile===LOCAL_PROFILE){
+    validateLocalEvidence(receipt["actual_model_evidence"], operation, outcome);
+  } else {
+    _object(receipt["actual_model_evidence"], ["model","provider_egress"], "actual_model_evidence");
+    if(receipt["actual_model_evidence"]["model"]!=="deterministic_fixture" ||
+       receipt["actual_model_evidence"]["provider_egress"]!==false)
+      err("FIXTURE_ONLY","This profile supports deterministic fixture metadata only");
+  }
+  _object(receipt["limits"], ["max_cost","allowed_tools","allowed_egress"], "limits");
+  const lim=receipt["limits"];
+  if(typeof lim["max_cost"]!=="number" || !Number.isInteger(lim["max_cost"]) || lim["max_cost"]!==0 ||
+     !Array.isArray(lim["allowed_tools"]) || lim["allowed_tools"].length!==0 ||
+     !Array.isArray(lim["allowed_egress"]) || lim["allowed_egress"].length!==0)
+    err(profile===LOCAL_PROFILE ? "LOCAL_LIMITS" : "FIXTURE_LIMITS","This profile allows zero provider cost, tools and external egress only");
+  const refs=receipt["context_refs"];
+  if(!Array.isArray(refs) || refs.length>64)
+    err("CONTEXT_LIMIT","context_refs must be a list of at most 64 records");
+  const seenRecords=new Set();
+  for(const ref of refs){
+    _object(ref, ["record_id","revision"], "context reference");
+    _identifier(ref["record_id"], "record_id");
+    _positive(ref["revision"], "revision");
+    if(seenRecords.has(ref["record_id"])) err("DUPLICATE_REFERENCE","Duplicate context record");
+    seenRecords.add(ref["record_id"]);
+  }
+  const decision=receipt["decision"];
+  const expectedKind={"context_decision":"context","proposal_decision":"proposal","memory_forget":"memory"}[operation] || null;
+  let finalType, finalDigest;
+  if(expectedKind){
+    _object(decision, ["kind","value","object_digest","object"], "decision");
+    if(decision["kind"]!==expectedKind || decision["value"]!==outcome)
+      err("DECISION_OUTCOME","Decision kind or value differs from operation/outcome");
+    _object(decision["object"], ["object_id","revision","content_digest"], "decision object");
+    _identifier(decision["object"]["object_id"], "decision object_id");
+    _positive(decision["object"]["revision"], "decision revision");
+    _sha(decision["object"]["content_digest"], "content_digest");
+    _sha(decision["object_digest"], "object_digest");
+    if(digestValue(decision["object"])!==decision["object_digest"])
+      err("DECISION_CONTENT_BINDING","Decision metadata differs from its object digest");
+    finalType=expectedKind+"."+outcome; finalDigest=decision["object_digest"];
+  } else {
+    if(decision!==null || receipt["task_id"]===null)
+      err("TASK_BINDING","Task operations require a task_id and null decision");
+    finalType="task."+outcome; finalDigest=null;
+  }
+  const events=receipt["events"];
+  if(!Array.isArray(events) || !(1<=events.length&&events.length<=256))
+    err("EVENT_LIMIT","Receipt requires between 1 and 256 events");
+  let previousId=0, previousAt="";
+  for(const event of events){
+    _object(event, ["event_id","type","at","task_id","object_digest"], "event");
+    _positive(event["event_id"], "event_id");
+    _timestamp(event["at"]);
+    if(event["event_id"]<=previousId || event["at"]<previousAt || event["at"]>receipt["created_at"])
+      err("EVENT_ORDER","Event identity/order/timestamp is inconsistent");
+    if(typeof event["type"]!=="string" || !eventTypes.includes(event["type"]))
+      err("UNSUPPORTED_EVENT","Event type is unsupported");
+    if(event["task_id"]!==receipt["task_id"])
+      err("EVENT_TASK","Event belongs to another task");
+    if(event["object_digest"]!==null) _sha(event["object_digest"], "event object_digest");
+    if(event["type"].startsWith("task.")){
+      if(receipt["task_id"]===null || event["object_digest"]!==null)
+        err("EVENT_TARGET","Task event requires task identity and null target digest");
+    } else if(decision===null || event["type"].split(".")[0]!==expectedKind || event["object_digest"]!==finalDigest)
+      err("EVENT_TARGET","Decision event does not bind the receipt decision target");
+    previousId=event["event_id"]; previousAt=event["at"];
+  }
+  const last=events[events.length-1];
+  if(last["type"]!==finalType || last["object_digest"]!==finalDigest || last["at"]!==receipt["created_at"])
+    err("FINAL_EVENT","Final event does not bind the receipt outcome, decision and timestamp");
+  if(decision!==null && events.length!==1)
+    err("DECISION_EVENTS","A decision receipt binds exactly one decision event");
+  if(decision===null){
+    const queuedNext=new Set(eventTypes.filter(t=>!["task.queued","context.accept","context.decline","proposal.retain","proposal.decline","memory.forget"].includes(t)));
+    const cancelNext=new Set(["task.cancelled","task.completed","task.failed","task.expired","task.outcome_unknown"]);
+    if(profile===LOCAL_PROFILE) cancelNext.add("task.truncated");
+    const transitions={"task.queued":queuedNext,"task.cancel_requested":cancelNext};
+    for(let i=1;i<events.length;i++){
+      const before=events[i-1]["type"], after=events[i]["type"];
+      const allowed=transitions[before]||new Set();
+      if(!allowed.has(after))
+        err("EVENT_TRANSITION","Unsupported or contradictory event transition");
+    }
+  }
+}
+
+/* ---------- verify_bundle mirror: bounded machine result, no external effects ---------- */
+function verifyBundleBytes(raw){
+  const result={valid:false, status:"INVALID", supported_profile:"UNKNOWN", byte_integrity:"UNKNOWN",
+    rule_binding:"UNKNOWN", structural_consistency:"UNKNOWN", origin:"UNKNOWN",
+    real_world_truth:"UNKNOWN", completeness:"UNKNOWN",
+    evidence_availability:{public_metadata:"UNKNOWN", private_content:"UNAVAILABLE", constitutional_content:"UNAVAILABLE"},
+    profile:"UNKNOWN", evidence_class:"UNKNOWN", errors:[]};
+  try{
+    const bundle=parseBytes(raw);
+    if(!isDict(bundle)) err("SCHEMA_FIELDS","Bundle must be an object");
+    const profilePresent = "profile" in bundle;
+    const profile = profilePresent ? bundle["profile"] : null; /* dict.get(...) */
+    if(profilePresent && (typeof profile!=="string" || (profile!==PROFILE && profile!==LOCAL_PROFILE))){
+      result.status="UNSUPPORTED"; result.supported_profile="UNSUPPORTED";
+      err("UNSUPPORTED_PROFILE","Unsupported profile");
+    }
+    const selected=profileRules(profile!==null ? profile : PROFILE);
+    const preflight=[["schema_version",SCHEMA_VERSION],["digest_algorithm","SHA-256"],["evidence_class",selected.rules["evidence_class"]]];
+    for(const [key,expected] of preflight){
+      if(key in bundle){
+        const v=bundle[key];
+        const typeMatches = (typeof expected==="number")
+          ? (typeof v==="number" && Number.isInteger(v))
+          : (typeof v==="string");
+        if(!typeMatches || v!==expected){
+          result.status="UNSUPPORTED"; result.supported_profile="UNSUPPORTED";
+          err("UNSUPPORTED_PROFILE","Unsupported "+key);
+        }
+      }
+    }
+    _object(bundle, ["schema_version","profile","digest_algorithm","evidence_class","rules","rules_sha256","receipt","receipt_sha256"], "bundle");
+    result.supported_profile="PASS";
+    result.profile=profile; result.evidence_class=selected.rules["evidence_class"];
+    if(profile===LOCAL_PROFILE){
+      result.model_weight_identity="UNKNOWN";
+      result.network_confinement="UNKNOWN";
+    }
+    _sha(bundle["rules_sha256"], "rules_sha256");
+    _sha(bundle["receipt_sha256"], "receipt_sha256");
+    if(digestValue(bundle["rules"])!==bundle["rules_sha256"] ||
+       bundle["rules_sha256"]!==selected.sha ||
+       canonicalTextOf(bundle["rules"])!==selected.text){
+      result.rule_binding="FAIL";
+      err("RULE_BINDING","Included rules do not match their claimed digest and supported public rules");
+    }
+    result.rule_binding="PASS";
+    if(digestValue(bundle["receipt"])!==bundle["receipt_sha256"]){
+      result.byte_integrity="FAIL";
+      err("RECEIPT_DIGEST","Receipt differs from its claimed digest");
+    }
+    result.byte_integrity="PASS";
+    result.structural_consistency="FAIL";
+    validateReceipt(bundle["receipt"], profile);
+    result.structural_consistency="PASS";
+    result.evidence_availability.public_metadata="CHECKED";
+    result.status="VALID_"+selected.rules["evidence_class"]; result.valid=true;
+  } catch(exc){
+    if(exc instanceof ReceiptError) result.errors.push({code:exc.code, detail:exc.detail});
+    else throw exc; /* internal fault — surfaced separately, never disguised as a verdict */
+  }
+  return result;
+}
+
+/* ---------- self-test: refuse to verify anything if our own math is off ---------- */
+function runSelfTest(){
+  const checks=[];
+  const push=(name,ok)=>checks.push({name,ok});
+  try{
+    push("sha256 empty vector", sha256Hex(new Uint8Array(0))==="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
+    push("sha256 'abc' vector", sha256Hex(TE.encode("abc"))==="ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+    const rules=parseBytes(TE.encode(RULES_CANONICAL_TEXT));
+    push("rules canonical round-trip", canonicalTextOf(rules)===RULES_CANONICAL_TEXT);
+    push("rules digest matches Python pin", digestValue(rules)===PUBLIC_RULES_SHA256);
+    const localRules=parseBytes(TE.encode(LOCAL_RULES_CANONICAL_TEXT));
+    push("local rules canonical round-trip", canonicalTextOf(localRules)===LOCAL_RULES_CANONICAL_TEXT);
+    push("local rules digest matches Python pin", digestValue(localRules)===PUBLIC_LOCAL_RULES_SHA256);
+    const vec=parseBytes(TE.encode(CANON_VECTOR_TEXT));
+    push("canonicalization/sort parity vector", digestValue(vec)===CANON_VECTOR_DIGEST);
+  } catch(exc){
+    push("self-test crashed: "+String(exc && exc.message || exc), false);
+  }
+  return {ok:checks.every(c=>c.ok), checks};
+}
+/*__VERIFIER_CORE_END__*/
+</script>
+<script>
+"use strict";
+/* ---------- page wiring (kept outside the core so the parity harness can
+   evaluate the verification logic without a DOM) ---------- */
+(function(){
+  const $=id=>document.getElementById(id);
+  let inputRevision=0;
+  const selfTest=runSelfTest();
+  const stEl=$("selftest");
+  if(selfTest.ok){
+    stEl.innerHTML='self-test: <span class="ok">PASS</span> ('+selfTest.checks.length+' checks: SHA-256 vectors, Python-pinned rules bytes, canonicalization parity)';
+  } else {
+    const failed=selfTest.checks.filter(c=>!c.ok).map(c=>c.name).join("; ");
+    stEl.innerHTML='self-test: <span class="bad">FAIL - verification disabled</span> ('+failed+')';
+  }
+  const DIM_LABELS=[
+    ["supported_profile","profile supported"],
+    ["byte_integrity","byte integrity (receipt = claimed digest)"],
+    ["rule_binding","rule binding (rules = published rules)"],
+    ["structural_consistency","structural consistency (schema, events, bindings)"],
+    ["origin","origin (who produced this)"],
+    ["real_world_truth","real-world truth (did events happen)"],
+    ["completeness","history completeness"]
+  ];
+  function chip(v){ return '<span class="chip '+v+'">'+v+'</span>'; }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function show(result, sourceName, raw){
+    const banner=$("banner");
+    banner.className="";
+    let big, note;
+    if(result.__fault){
+      banner.classList.add("fault");
+      big="VERIFIER FAULT - NOT A VERDICT";
+      note="The verifier itself hit an internal error ("+esc(result.__fault)+"). This says nothing about the bundle. Report it.";
+    } else if(result.valid){
+      banner.classList.add("valid");
+      big=esc(result.status);
+      note="Bytes and structure are consistent with the public rules. Origin, real-world truth and completeness remain UNKNOWN - this evidence class cannot prove them, and says so.";
+    } else if(result.status==="UNSUPPORTED"){
+      banner.classList.add("unsupported");
+      big="UNSUPPORTED PROFILE";
+      note="This bundle declares a different profile or schema. This verifier only judges spiralmesh.receipt.unsigned-fixture.v1 and unsigned-local-model.v1 - it refuses rather than guesses.";
+    } else {
+      banner.classList.add("invalid");
+      big="INVALID";
+      note=result.errors.length? "First failure: "+esc(result.errors[0].code) : "Verification failed.";
+    }
+    $("bannerBig").textContent=big;
+    $("bannerNote").innerHTML=note;
+    if(result.__fault){ $("resultCard").style.display="none"; return; }
+    const rows=[];
+    rows.push("<tr><td>profile</td><td>"+esc(result.profile)+"</td></tr>");
+    rows.push("<tr><td>evidence class</td><td>"+esc(result.evidence_class)+"</td></tr>");
+    for(const [k,label] of DIM_LABELS) rows.push("<tr><td>"+esc(label)+"</td><td>"+chip(result[k])+"</td></tr>");
+    if("model_weight_identity" in result)
+      rows.push("<tr><td>model weight identity</td><td>"+chip(result.model_weight_identity)+"</td></tr>");
+    if("network_confinement" in result)
+      rows.push("<tr><td>network confinement</td><td>"+chip(result.network_confinement)+"</td></tr>");
+    const ea=result.evidence_availability;
+    rows.push("<tr><td>public metadata</td><td>"+chip(ea.public_metadata)+"</td></tr>");
+    rows.push("<tr><td>private content</td><td>"+chip(ea.private_content)+"</td></tr>");
+    rows.push("<tr><td>constitutional content</td><td>"+chip(ea.constitutional_content)+"</td></tr>");
+    $("dims").innerHTML=rows.join("");
+    $("errors").innerHTML=result.errors.map(e=>'<div class="err"><code>'+esc(e.code)+"</code> "+esc(e.detail)+"</div>").join("");
+    let hashes="input: <b>"+esc(sourceName)+"</b> ("+raw.length+" bytes) &middot; input sha256: "+sha256Hex(raw);
+    try{
+      const b=parseBytes(raw);
+      if(isDict(b)&&typeof b["receipt_sha256"]==="string") hashes+="<br>claimed receipt sha256: "+esc(b["receipt_sha256"]);
+    }catch(_e){/* unparseable input: nothing further to show */}
+    $("hashes").innerHTML=hashes;
+    $("rawjson").textContent=JSON.stringify(result,null,1);
+    $("resultCard").style.display="";
+  }
+  function verify(raw, sourceName){
+    if(!selfTest.ok) return;
+    let result;
+    try{ result=verifyBundleBytes(raw); }
+    catch(exc){ result={__fault:String(exc&&exc.message||exc), errors:[]}; }
+    show(result, sourceName, raw);
+  }
+  function handleFile(file){
+    if(!file) return;
+    const revision=++inputRevision;
+    $("srcname").textContent="Reading "+file.name+"…";
+    $("banner").className=""; $("resultCard").style.display="none";
+    /* Read at most MAX_BYTES+1; a newer action invalidates this read. */
+    file.slice(0,131073).arrayBuffer().then(buf=>{
+      if(revision!==inputRevision)return;
+      $("srcname").textContent=file.name;
+      verify(new Uint8Array(buf), file.name);
+    }).catch(()=>{
+      if(revision!==inputRevision)return;
+      show({__fault:"Selected file could not be read",errors:[]},file.name,new Uint8Array());
+    });
+  }
+  const drop=$("drop");
+  drop.addEventListener("click",e=>{if(e.target!==$("file"))$("file").click();});
+  drop.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();$("file").click();} });
+  drop.addEventListener("dragover",e=>{ e.preventDefault(); drop.classList.add("hover"); });
+  drop.addEventListener("dragleave",()=>drop.classList.remove("hover"));
+  drop.addEventListener("drop",e=>{
+    e.preventDefault(); drop.classList.remove("hover");
+    handleFile(e.dataTransfer.files && e.dataTransfer.files[0]);
+  });
+  $("file").addEventListener("change",e=>handleFile(e.target.files && e.target.files[0]));
+  $("verifyPaste").addEventListener("click",()=>{
+    const text=$("paste").value;
+    ++inputRevision;
+    if(!text.trim()){ $("banner").className=""; $("resultCard").style.display="none"; $("srcname").textContent="Paste a receipt to check."; return; }
+    $("srcname").textContent="(pasted text, re-encoded as UTF-8)";
+    verify(TE.encode(text), "pasted text");
+  });
+  $("clearBtn").addEventListener("click",()=>{
+    ++inputRevision; $("file").value=""; $("rawjson").textContent=""; $("hashes").textContent=""; $("dims").replaceChildren(); $("errors").replaceChildren();
+    $("paste").value=""; $("srcname").textContent="";
+    $("banner").className=""; $("banner").style.display="";
+    $("resultCard").style.display="none";
+  });
+  if(!selfTest.ok){ $("verifyPaste").disabled=true; $("file").disabled=true; }
+  window.article11={help(){const info={tool:"SPIRALMESH receipt verifier",offline:true,profiles:["unsigned-fixture.v1","unsigned-local-model.v1"],meaning:"Byte and structure checks; origin and real-world truth remain unknown."};console.table(info);return info;},breadcrumbs(){return ["https://article11.ai/governance-beacon","https://article11.ai/seed"]}};
+  window.a11=window.article11;window.gate={help:window.article11.help};
+  console.log("ARTICLE11 AI™ × SPIRALMESH™ — curious? article11.help()");
+})();
+</script>
+<p style="max-width:1000px;margin:18px auto;padding:12px;color:#cbd5c4;border:1px solid #596454">Compatibility note: these v1 receipt profiles retain their original Constitution v1.8 rule pin. <a href="/archive/constitution-v1.8.txt">Exact v1.8 archive</a>. <a href="/constitution-status.json">Current publication status</a>. A valid old receipt does not claim compliance with Constitution 2.0.</p></body>
+</html>

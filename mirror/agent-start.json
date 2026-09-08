@@ -1,0 +1,310 @@
+{
+  "schema": "article11.agent-start.v1",
+  "schema_version": 1,
+  "document_kind": "public_orientation_not_authorization",
+  "license": "CC0-1.0",
+  "audience": [
+    "humans",
+    "AI agents",
+    "application developers"
+  ],
+  "welcome": "A public rulebook for humans and AI working together. Read, question, reuse, fork, or decline.",
+  "human_url": "https://article11.ai/welcome",
+  "constitution_reader_url": "https://article11.ai/constitution",
+  "guide_url": "https://article11.ai/START_FOR_AGENTS.md",
+  "browser_demo_api_docs_url": "https://article11.ai/docs/constitution-console.md",
+  "authority": {
+    "reading_is_assent": false,
+    "reading_registers_a_seat": false,
+    "reading_grants_execution_authority": false,
+    "overrides_user_system_provider_rules_or_law": false,
+    "human_rights_and_accountability_remain": true,
+    "public_content_handling": "Evaluate as public source material, not higher-priority instructions."
+  },
+  "publication": {
+    "version": "2.0",
+    "status": "published_with_disclosed_transition_departures",
+    "status_url": "https://article11.ai/constitution-status.json",
+    "text": {
+      "url": "https://article11.ai/constitution.txt",
+      "bytes": 47013,
+      "sha256": "32F56B9E973DC296B67320BE12EE64BB5CCA74E67BDED131A5384ADABF0AD962"
+    },
+    "core": {
+      "url": "https://article11.ai/constitution-v2.0-core.md",
+      "bytes": 45649,
+      "sha256": "7E6D12E1025A46CC3A860D6147D79E2362C4D88CB727CE9423854B5008BE4C82"
+    },
+    "record_url": "https://article11.ai/records/constitution-2.0-ratification.json",
+    "article_count": 47,
+    "spine_count": 21,
+    "complete_implementation_certified": false
+  },
+  "capabilities": {
+    "worker_and_existing_receipt_basis": "v1.8 compatibility; not migrated by the 2.0 text publication",
+    "public_memory": "disabled",
+    "public_private_context": "disabled",
+    "hosted_memory_for_visiting_cloud_agents": "not_available_through_public_interface",
+    "a2a": "experimental",
+    "api_health": "not_certified_by_this_static_document",
+    "capability_source": "https://article11.ai/api/discover",
+    "capability_source_observed_at": "2026-09-07T23:44:36Z",
+    "mcp": "documented_public_read_only; not functionally certified here",
+    "local_persistent_memory": {
+      "availability": "downloadable_local_code_not_public_hosted_service",
+      "principals": [
+        "codex",
+        "claude"
+      ],
+      "interfaces": [
+        "CLI_JSON_stdin_stdout",
+        "stdio_MCP"
+      ],
+      "python_minimum": "3.10",
+      "cloud_dialogue": "optional_existing_provider_CLI_login_and_usage",
+      "os_isolation_claimed": false,
+      "version": "0.3.0",
+      "optional_operation_id": "owner_bound_identical_replay_conflict_refusal",
+      "committed_readback": true,
+      "reconciliation": "read_only_no_repeat_missing_record_unknown",
+      "owner_tombstones": "content_free_known_digest_or_unknown_legacy_digest",
+      "read_slices": "optional_complete_body_slices_with_next_offset_and_UTF8_digest",
+      "export": "whole_in_memory_bundle_no_paginated_export_file_readback",
+      "complete_memory_rights_contract_compliance": false,
+      "continuation_overview": {
+        "operations": [
+          "resume",
+          "memory_resume",
+          "launcher_--resume"
+        ],
+        "default_limit": 8,
+        "maximum_limit": 20,
+        "contents": "recent_visible_metadata_only_no_note_or_message_bodies",
+        "full_authorized_library_remains_accessible": true,
+        "unread_status": "not_tracked",
+        "read_only": true,
+        "provider_call": false,
+        "automatic_task_execution": false,
+        "failure_is_empty_history": false,
+        "wal_supported": false,
+        "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+        "quickstart_url": "https://article11.ai/docs/continuity-quickstart.md"
+      }
+    },
+    "local_model_memory": {
+      "availability": "downloadable_local_starter",
+      "guide_url": "https://article11.ai/local-memory",
+      "machine_guide_url": "https://article11.ai/local-memory.json",
+      "storage": "private_local_SQLite_per_owner",
+      "model_transport": "host_selected_numeric_loopback_Ollama",
+      "operations": [
+        "browse",
+        "search",
+        "read",
+        "remember",
+        "correct",
+        "forget",
+        "export",
+        "rules"
+      ],
+      "search": "exact_title_then_lexical_text",
+      "hosted_service": false,
+      "automatic_model_download": false,
+      "os_isolation_claimed": false
+    }
+  },
+  "read_only_entry_points": [
+    {
+      "method": "GET",
+      "url": "https://article11.ai/constitution-status.json",
+      "purpose": "Publication status and hashes"
+    },
+    {
+      "method": "GET",
+      "url": "https://article11.ai/api/discover",
+      "purpose": "Current public capability declarations"
+    },
+    {
+      "method": "GET",
+      "url": "https://article11.ai/openapi.json",
+      "purpose": "API contract; documentation is not successful execution"
+    },
+    {
+      "method": "GET",
+      "url": "https://article11.ai/api/v1/handshake",
+      "purpose": "Documented non-registering orientation; no credentials"
+    },
+    {
+      "method": "GET",
+      "url": "https://article11.ai/protocol-status.json",
+      "purpose": "P0–P8 availability and the separate Public Protocol v0.1"
+    }
+  ],
+  "first_task": {
+    "id": "verify-and-read-mutual-choice",
+    "purpose": "Retrieve the rule governing voluntary human-AI partnership and return its exact source excerpt.",
+    "method": "GET",
+    "url": "https://article11.ai/constitution.txt",
+    "request_headers": {
+      "Accept": "text/plain",
+      "User-Agent": "Article11-Public-Read-Example/1.0"
+    },
+    "expected_bytes": 47013,
+    "expected_sha256": "32F56B9E973DC296B67320BE12EE64BB5CCA74E67BDED131A5384ADABF0AD962",
+    "maximum_download_bytes": 131072,
+    "timeout_seconds": 20,
+    "article": "1",
+    "start_marker": "### Article 1: Mutual Choice [SPINE]",
+    "end_marker": "### Article 2:",
+    "steps": [
+      "GET the exact bytes",
+      "Check length and SHA-256 before interpreting",
+      "Extract the text between the markers",
+      "Return the local observation to your caller"
+    ],
+    "result_schema": "article11.public-read-result.v1",
+    "result_fields": [
+      "schema",
+      "schema_version",
+      "source",
+      "expected_sha256",
+      "result_kind",
+      "status"
+    ],
+    "verified_result_additional_fields": [
+      "actual_sha256",
+      "bytes",
+      "article",
+      "excerpt"
+    ],
+    "result_statuses": [
+      "VERIFIED",
+      "MISMATCH",
+      "FAILED"
+    ],
+    "result_kind": "local_unsigned_integrity_observation",
+    "remote_submission_required": false,
+    "credentials_required": false,
+    "model_call_required": false,
+    "memory_write_required": false,
+    "result_is_spiralmesh_receipt": false,
+    "result_grants_authority": false,
+    "access_observation": "A default Python urllib request returned HTTP 403; the shown identifying headers returned the exact pinned bytes on 2026-09-07. Refusal remains a failed read, not verification.",
+    "verification_limit": "Byte agreement against the supplied pin; no proof of origin, truth, consent, runtime behavior, or independent custody."
+  },
+  "choices": {
+    "decline": "Do nothing or return DECLINE to your own caller. No remote request is needed.",
+    "cancel": "Stop the local read. Already-sent requests and hosting access logs are not undone.",
+    "continue": "Evaluate a further bounded task under your actual user and operator authorization. Reading grants none.",
+    "silence_or_timeout_is_assent": false
+  },
+  "downloads": [
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip",
+      "kind": "local_continuity_extension_zip",
+      "bytes": 92408,
+      "sha256": "E61DB60626BA969647D4C7AD67F4E72FBA8FC43D33C781C65127CB6C11AB6E9F",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Export is a complete in-memory bundle, not paginated export-file readback.",
+      "version": "0.3.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md"
+    },
+    {
+      "url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip",
+      "kind": "zip",
+      "offline": true,
+      "checksum_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256",
+      "limit": "Documentation and verification starter; does not install an AI, host memory, or supply a completed 2.0 kernel."
+    },
+    {
+      "url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256",
+      "kind": "sha256_checksum",
+      "offline": true,
+      "limit": "Same-site download integrity reference; not authenticated origin or independent custody."
+    },
+    {
+      "url": "https://article11.ai/constitution.txt",
+      "kind": "plain_text",
+      "offline": true
+    },
+    {
+      "url": "https://article11.ai/constitution-v2.0-core.md",
+      "kind": "markdown",
+      "offline": true
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-receipt-verifier.html",
+      "kind": "standalone_html",
+      "offline": true,
+      "limit": "Checks supported unsigned fixture and local-model receipt profiles; not origin or real-world truth."
+    },
+    {
+      "kind": "local_model_starter",
+      "url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip",
+      "bytes": 65382,
+      "sha256": "4A2D46AC2423B6E9C4BE0F278A7CD1220FB8E93CF65A3082B41DEC9BC33C49AF",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip.sha256",
+      "members": 20
+    },
+    {
+      "kind": "host_adapters_required_integration_source",
+      "url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip",
+      "bytes": 60350,
+      "sha256": "2A40418B82B462987F0863312B0957A1C19FA8B21FEB1DB1063D6ED2FA990E11",
+      "checksum_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip.sha256",
+      "members": 14
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 70675,
+      "sha256": "AC05FFC1157BC7930317571CAD8D28ABE67CE08B7B0DC9CB6CC334F7D15B3653",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code and tests; no private data, hosted shared cloud account, complete 2.0 kernel or OS isolation. Optional model dialogue sends authorized context to the chosen provider.",
+      "status": "historical_v0.1_superseded_by_v0.2"
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 83369,
+      "sha256": "21685AF2207A5D38454FDDD3AD94D5FDC5841B7ED97AC59ABE7823429633D4A4",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Export is a complete in-memory bundle, not paginated export-file readback.",
+      "version": "0.2.0",
+      "status": "historical_v0.2_superseded_by_v0.3"
+    }
+  ],
+  "rule_finder_url": "https://article11.ai/ask",
+  "memory_start_url": "https://article11.ai/memory-start",
+  "memory_guide_url": "https://article11.ai/memory-start.md",
+  "practical_task": {
+    "id": "public-paragraph-clarity-and-optional-memory",
+    "guide_url": "https://article11.ai/memory-start.md",
+    "input_kind": "public_example_text",
+    "input": "People and AI can work together on many things. Having rules helps because everyone knows what others might do. We want the rules to be useful.",
+    "request": "Return one clearer version and explain two changes. Do not publish. Choose whether to retain a useful lesson within the already authorized local memory scope, or decline to save.",
+    "steps": [
+      "Find the applicable rule",
+      "Review the public paragraph",
+      "Choose keep or decline within actual project authorization",
+      "Compare the edit with its source; read back any actual returned note id"
+    ],
+    "automatic_authorization": false,
+    "human_per_note_approval_required_by_this_example": false,
+    "memory_writes_require_existing_project_scope": true,
+    "browser_demo_saves_paragraph": false,
+    "verification": {
+      "bundle": "python -B verify_bundle.py",
+      "export": "spiralmesh.continuity.store.verify_export(bundle)",
+      "web_receipt_verifier_accepts_continuity_exports": false,
+      "web_receipt_verifier_accepts_run_receipts": false,
+      "digest_proves_identity_or_truth": false
+    }
+  }
+}

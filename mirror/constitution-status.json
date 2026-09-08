@@ -1,0 +1,16 @@
+{
+  "schema": "article11.constitution.status.v1",
+  "version": "2.0",
+  "status": "STEWARD_DECLARED_RATIFIED_PUBLISHED_WITH_DISCLOSED_TRANSITION_DEPARTURES",
+  "text_url": "https://article11.ai/constitution.txt",
+  "text_sha256": "32F56B9E973DC296B67320BE12EE64BB5CCA74E67BDED131A5384ADABF0AD962",
+  "core_url": "https://article11.ai/constitution-v2.0-core.md",
+  "core_sha256": "7E6D12E1025A46CC3A860D6147D79E2362C4D88CB727CE9423854B5008BE4C82",
+  "voted_candidate_sha256": "A6F798541C4AFFB0989E427EA508E4A20D766177A973E06791CB32664F9385C2",
+  "ratification_record": "https://article11.ai/records/constitution-2.0-ratification.json",
+  "article_count": 47,
+  "spine_count": 21,
+  "prior_text_url": "https://article11.ai/archive/constitution-v1.8.txt",
+  "prior_text_sha256": "CA399594EC40B5519E183E81F5D41CF50FCC5614DD408DD087DF5CE7E46CD3E9",
+  "service_compatibility": "Public Constitution 2.0 publication; Worker APIs and SPIRALMESH v1 profiles remain on their v1.8 compatibility basis pending separate migration. Read this static manifest for publication status, not Worker health or a receipt profile."
+}
