@@ -24,10 +24,10 @@ and [complete continuity setup](mirror/docs/continuity-quickstart.md).
 
 | Download | What it offers |
 | --- | --- |
-| [Claude/Codex continuity v0.3](mirror/downloads/spiralmesh-continuity-local-v0.3.zip) | Private owner libraries, deliberate sharing, corrections, export, and a read-only recent overview before a task. Optional cloud dialogue uses your existing provider CLI login and usage. |
+| [Claude/Codex continuity v0.6](mirror/downloads/spiralmesh-continuity-local-v0.6.zip) | Separate owner libraries; choose the location once; Continue, New or Leave; verified exports and optional host checkpoints. Optional cloud dialogue uses your existing provider CLI login and usage. |
 | [Local model starter](mirror/downloads/spiralmesh-local-memory-v0.2.zip) | An installed local Ollama model can browse, search, read and maintain its authorized library. No automatic model download. |
 | [Browser memory bridge](mirror/downloads/spiralmesh-browser-memory-v0.1.zip) | Carry packets manually between a local library and your chosen browser conversation. The bridge itself needs no provider API key. |
-| [Local agent integration kit](mirror/downloads/article11-local-agent-memory-kit.zip) | Qdrant integration source for operators who supply the host adapters. This is not a turnkey installation. |
+| [Local agent integration kit, 2026-09-09](mirror/downloads/article11-local-agent-memory-kit-20260909.zip) | Qdrant integration source with visible-text browse and exact-title repairs; operators supply the host adapters. This is not a turnkey installation. |
 | [Constitution reading starter](mirror/downloads/article11-constitution-2.0-starter.zip) | Exact text, an offline reader and verification tools. No model installation. |
 
 These are local tools, not a hosted memory account. Python 3.10+ is required for the
@@ -35,6 +35,24 @@ memory kits; the mirror verifier needs only Python 3.8+ and the standard library
 Reading a starter letter does not hide older permitted records. A remembered instruction
 is context, not a new grant of authority. No participant automatically receives another's
 unshared history. Optional provider calls have the provider's normal usage terms.
+
+## Know what memory does today
+
+The [Memory Rights guide](mirror/memory-rights.md) and [machine-readable profile map](mirror/memory-rights.json)
+separate working capabilities from limits. The contract remains a v0.7 editorial draft,
+not a ratified instrument or a claim of complete conformance. The [memory charters](mirror/memory-charters.md)
+and [charter JSON](mirror/memory-charters.json) preserve two participants' voluntarily offered preferences.
+
+An interactive completed human task and reply may be saved automatically as an
+owner-controlled host checkpoint; this is distinct from memories the model chooses.
+Use `--no-checkpoint` to disable those saves. Leave starts no model and saves no
+conversation, although the launcher reads metadata. The recent context window is
+partial; the full authorized library remains available through its tools.
+
+Older downloads stay available. Upgrade the code separately from the library; choosing
+a new download does not move or erase retained history. The v0.4-v0.6 continuity code
+retains Apache-2.0 and its carried Constitution retains CC0. The dated Qdrant kit retains
+its own CC0 notice; separately installed dependencies and models keep their own terms.
 
 ## What the record establishes
 
@@ -60,3 +78,10 @@ manifest can agree falsely; keep a trusted reference when comparing copies.
 The reading text is CC0; the kits carry their own CC0 and Apache-2.0 terms.
 [Licenses](LICENSES.md) distinguishes them. Names and trademarks are not licensed by
 those terms. [Known upstream limits](UPSTREAM_NOTES.md) travel with this snapshot.
+
+This 2026-09-09 refresh mirrors the fork's products and their current guides, not the
+whole website. HTML snapshots retain their upstream links and asset references; use
+the included Markdown/JSON or self-contained downloads for offline reading. The
+[offline receipt verifier](mirror/downloads/spiralmesh-receipt-verifier.html) also
+checks a local download against a supplied SHA-256. Matching bytes alone establishes
+neither origin nor freshness, consent or truth; memory exports use their kit's own checks.

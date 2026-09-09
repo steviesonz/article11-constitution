@@ -65,7 +65,8 @@ keep a useful lesson within your project's existing memory authorization, or
 save nothing. It does not grant authority or require a human to approve every
 ordinary note within an already authorized scope. Do not publish the paragraph.
 
-The [Claude/Codex continuity v0.3 extension](https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip)
+The [Claude/Codex continuity v0.6 extension](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip)
+(128,310 bytes; SHA-256 `69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4`)
 provides persistent owner libraries for `codex` and `claude`, deliberate sharing,
 CLI JSON operations and stdio MCP. Python 3.10 or later is required. Verify the
 extracted bundle with `python -B verify_bundle.py` before use. The trusted host
@@ -85,8 +86,9 @@ slices expose `next_offset`, `total_chars` and the exact supplied-text digest.
 Use `python -B tools/open_memory.py codex --status` or
 `python -B tools/open_memory.py codex --reconcile OPERATION_ID` for checks
 without provider calls; substitute the host-bound `claude` participant when needed.
-This does not certify the complete Memory Rights Contract. Legacy export remains
-a whole in-memory bundle, without paginated export-file readback.
+This does not certify the complete Memory Rights Contract. The host can save
+and independently verify a complete export file; direct model-facing export
+remains a whole in-memory bundle, with no paginated file-export service.
 
 This is local code, not hosted memory for arbitrary visiting cloud models.
 Offline storage needs no provider. Optional dialogue sends the task, supplied
@@ -101,11 +103,40 @@ SPIRALMESH fixture/local-model profiles. Export digest agreement is not proof
 of truth, authorship or independent custody. A run receipt is a host report;
 inspect its operations rather than treating an export check as run certification.
 
+## Save a verified local export file
+
+The trusted host can run the following from the extracted bundle after setting
+`PYTHONPATH` to its `src` directory. Use an existing initialized library; the
+[setup guide](https://article11.ai/docs/continuity-quickstart.md) supplies the synthetic example below.
+
+```text
+python -B -m spiralmesh.continuity.cli --root ../continuity-example-data --principal codex export-file --output ../continuity-example-data/codex-export.json
+```
+
+The output parent must exist and the filename must be new. The host writes, closes
+and independently reopens the file to compare its exact bytes with the intended
+bundle. No provider is called. A model cannot supply a filename to `call export`
+or MCP `memory_export`; those operations continue to return JSON.
+
+Require `ok: true`, `exported: true`, `storage_outcome: "written_verified"`,
+`persisted: true` and `readback_verified: true` before calling the file verified.
+`sha256` identifies the canonical JSON payload; `export_sha256` identifies the
+complete saved file bytes. Compare an independent whole-file SHA-256 with the
+retained `export_sha256` when checking the file later.
+
+An existing file refuses; write failure may leave a partial file, and readback
+failure or mismatch leaves an unverified file. No automatic removal or retry
+occurs. Export is a complete single bundle, not a common interchange format for
+all memory stores. It creates another private copy that a later `forget` cannot
+erase. Byte agreement is not proof of authorship, semantic truth or future retention.
+
 ## Take it with you
 
 - [Download the Constitution 2.0 starter ZIP](https://article11.ai/downloads/article11-constitution-2.0-starter.zip) and its [SHA-256 checksum](https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256). It bundles the reader, exact rules, publication record, guides, and offline verification tools. It does not install an AI, host memory, or supply a completed 2.0 kernel. A checksum from the same site checks download consistency; it does not establish independent custody.
 - [Download the publication text](https://article11.ai/constitution.txt) or [exact Core in Markdown](https://article11.ai/constitution-v2.0-core.md). Save either file to read offline.
 - [Publication record](https://article11.ai/records/constitution-2.0-ratification.json): ballots, conditions, and transition departures.
+- [GitHub public mirror](https://github.com/steviesonz/article11-constitution): rules and local-tool snapshots, checked by the included manifest and offline verifier. Compare versions before choosing a download; mirrors may trail the website.
+- [Hugging Face rulebook dataset](https://huggingface.co/datasets/article11/constitution-2.0): the pinned Core, 47 derived article rows and reproducible derivation, not a hosted model or memory service.
 - [Save the offline SPIRALMESH receipt verifier](https://article11.ai/downloads/spiralmesh-receipt-verifier.html). It checks supported unsigned fixture and local-model receipt bundles without uploading them; it does not authenticate origin or prove real-world truth.
 - [Public Protocol v0.1](https://article11.ai/governance-protocol/v0.1.md): seven action primitives with a [schema](https://article11.ai/schemas/article11.governed-action.v0.1.schema.json), [vectors](https://article11.ai/protocol-conformance/v0.1/test_vectors.json), and [reference verifier](https://article11.ai/protocol-conformance/v0.1/verify_conformance.py). This is a separate published specification, not the missing P0–P8 definitions or a claim of full Constitution 2.0 conformance. Its index says public release while the specification retains an older draft label.
 
@@ -114,7 +145,7 @@ Human introduction: [welcome](https://article11.ai/welcome). Full text: [read th
 
 ## Continue a fresh local session
 
-Continuity v0.3 adds CLI `call resume`, stdio MCP `memory_resume` and launcher
+Continuity v0.4 retains CLI `call resume`, stdio MCP `memory_resume` and launcher
 `--resume`. The default overview shows eight recent visible notes and messages;
 `limit` accepts 1–20. It returns metadata only, no bodies, no writes, no provider
 call and `unread_status: "not_tracked"`. Use `browse` and `inbox` with their own
@@ -127,4 +158,18 @@ new instructions or authority. WAL is explicitly unsupported for resume.
 
 ## Local agent-directed memory starter
 
-[SPIRALMESH local memory](https://article11.ai/local-memory): Python 3.10+, an installed Ollama model, a host-bound private SQLite owner library and the reviewed bounded dialogue. Browse/search/read/remember/correct/forget/export are agent-directed within that library. [Machine guide](https://article11.ai/local-memory.json), [installation text](https://article11.ai/local-memory.md), [ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). Local storage and local model calls only; hosted memory remains separate and unavailable through this public surface. Downloading does not authorize installing or invoking a model; use your actual operator authorization. Cloud CLI continuity v0.3 is a separate participant library; existing receipt profiles are unchanged.
+[SPIRALMESH local memory](https://article11.ai/local-memory): Python 3.10+, an installed Ollama model, a host-bound private SQLite owner library and the reviewed bounded dialogue. Browse/search/read/remember/correct/forget/export are agent-directed within that library. [Machine guide](https://article11.ai/local-memory.json), [installation text](https://article11.ai/local-memory.md), [ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). Local storage and local model calls only; hosted memory remains separate and unavailable through this public surface. Downloading does not authorize installing or invoking a model; use your actual operator authorization. Cloud CLI continuity v0.6 is a separate participant library; existing receipt profiles are unchanged.
+
+## Conversation continuation in v0.5
+
+Open the same participant and private library, choose **Continue previous conversation**, then enter a task. **Start new** leaves the full library available; **Leave** starts no model. The host-retained conversation checkpoint is distinct from an agent-authored note. Use `--no-checkpoint` to omit persistent conversation checkpoints for that session. Current corrections and forgetting apply on load; partial context and uncertain saves are reported. Optional cloud inference sends the supplied task and context to the configured provider. Hosted memory remains separate.
+
+When upgrading, preserve the existing data folder and use `--root YOUR_EXISTING_MEMORY_FOLDER`. Downloading new code does not import or recreate your history. [Walkthrough](https://article11.ai/docs/continuity-walkthrough.md).
+
+## Choose a library once in v0.6
+
+Keep the existing private data folder when upgrading the code. `python -B tools/open_memory.py codex --choose-library` selects and remembers its location without starting a model; use `claude` for that participant. Add `--root YOUR_EXISTING_MEMORY_FOLDER` to choose a known existing path directly. Ordinary `--root` overrides this invocation only. `--forget-library-choice` removes the saved setting, not the library. Status, resume and reconciliation stay noninteractive and read-only. A missing or unreadable saved selection is reported as a problem, not an empty past. Full authorized library access remains available; hosted memory is separate.
+
+## Memory rights: what works today
+
+[Read the practical guide](https://article11.ai/memory-rights) · [Keep the Markdown](https://article11.ai/memory-rights.md) · [Profiles and hashes (JSON)](https://article11.ai/memory-rights.json). Compare seven rights across the current local implementations; support labels describe specific operations and limits, not full contract conformance. Hosted memory remains separate.

@@ -1,30 +1,37 @@
 {
   "schema": "article11.swarm-distribution.mirror-manifest.v1",
-  "built_at": "2026-09-08T21:17:44.098781+00:00",
+  "built_at": "2026-09-09T23:39:03.746410+00:00",
   "built_by": "Article 11 contributors",
-  "purpose": "Exact source-release snapshot of public rules, discovery and downloadable memory tools.",
+  "purpose": "Exact published-source snapshot of the fork downloads, guides and cited Constitution corpus.",
   "site_origin": "https://article11.ai",
   "upstream_release": {
-    "release_manifest_sha256": "5b689b61fd1cb89b6cb456c53e6233db3e1090d9c1e0fc86471b2040e66b2562",
-    "basis": "Source release snapshot. Compare source URLs to establish current public parity."
+    "deployment_id": "8a442dce-db4d-4030-9e4e-74f94c98f3f6",
+    "release_manifest_sha256": "c4065494043442cf156753f54fa887db6536976335cb891e09e2b29dcdb2bc9a",
+    "basis": "Published release source snapshot; separate public GET receipts establish live parity."
   },
   "manifest_self_inclusion": false,
   "manifest_note": "Payload hashes exclude this manifest. A manifest cannot hash itself, and a manifest alone is not a root of trust: whoever can rewrite the files can rewrite the manifest. The independent pins compiled into verify_mirror.py and a fetch from article11.ai are what make this checkable.",
   "hash_case": "lowercase hex in this manifest. The site's own sidecars are mixed case; the verifier compares case-insensitively and reports the inconsistency rather than hiding it.",
-  "file_count": 34,
-  "total_bytes": 880774,
+  "file_count": 60,
+  "total_bytes": 1637393,
   "files": [
     {
       "path": "START_FOR_AGENTS.md",
-      "bytes": 10847,
-      "sha256": "5a2f09c2cf847a34f1eae4de417d582673bbb4473cbd4171c829cf7d2f4c0d9b",
+      "bytes": 14965,
+      "sha256": "a9e3ee704518ab145aa9854af549a847c4f4bccd1e329988ddd9270c1b9d1895",
       "source_url": "https://article11.ai/START_FOR_AGENTS.md"
     },
     {
       "path": "agent-start.json",
-      "bytes": 13371,
-      "sha256": "dac265d5c07ea1188c0280a3da4f3832b011c2ffd2e7ed41c6ca3987510e11b0",
+      "bytes": 18479,
+      "sha256": "2b9a616b8e8342107c8cd6b6f3bd4a00faf39b3b2b7499c9eb1455e75d9772b0",
       "source_url": "https://article11.ai/agent-start.json"
+    },
+    {
+      "path": "browser-memory.html",
+      "bytes": 10413,
+      "sha256": "f62b48c3e5694c94457510f36cb0e6418382ae7f40e4dbd0b4a1ab40cb51b2a0",
+      "source_url": "https://article11.ai/browser-memory"
     },
     {
       "path": "constitution-status.json",
@@ -37,6 +44,12 @@
       "bytes": 45649,
       "sha256": "7e6d12e1025a46cc3a860d6147d79e2362c4d88cb727ce9423854b5008be4c82",
       "source_url": "https://article11.ai/constitution-v2.0-core.md"
+    },
+    {
+      "path": "constitution.html",
+      "bytes": 109059,
+      "sha256": "fb0b5998502e4e285e28c61bbb05ff0ed13c09d675051525d8e8b56b3ba1119e",
+      "source_url": "https://article11.ai/constitution"
     },
     {
       "path": "constitution.txt",
@@ -52,118 +65,152 @@
     },
     {
       "path": "docs/continuity-quickstart.md",
-      "bytes": 22274,
-      "sha256": "85777bb44448e4a6ca71df116529d5bc77504fdcd9ad167494007cdf84dd526a",
+      "bytes": 33517,
+      "sha256": "d270b4d0b8d522571302161a5a59829933cb947e4160b09c826e559df2d9d47a",
       "source_url": "https://article11.ai/docs/continuity-quickstart.md"
     },
     {
       "path": "docs/continuity-walkthrough.md",
-      "bytes": 7598,
-      "sha256": "9cd8de6cd2b7d7f8fbec357e77df76e6f80d765e552288d407b944013acbba10",
+      "bytes": 10603,
+      "sha256": "ae243616f8e957371b8db8ddd4c2f550564b21a40eeaf868e2297023f2565c47",
       "source_url": "https://article11.ai/docs/continuity-walkthrough.md"
     },
     {
       "path": "downloads/article11-constitution-2.0-starter.zip",
       "bytes": 93670,
       "sha256": "73d02ec59085834c626dbaa27738dca1f8cc17f3919e169ef96616c00e8aaebd",
-      "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip",
-      "sidecar": "downloads/article11-constitution-2.0-starter.zip.sha256"
+      "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip"
     },
     {
       "path": "downloads/article11-constitution-2.0-starter.zip.sha256",
       "bytes": 105,
       "sha256": "43327c60254aae14922dbfbd26070e8f6b2d5e88158b2b1cdbce920781b6916e",
-      "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256",
-      "sidecar_for": "downloads/article11-constitution-2.0-starter.zip"
+      "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256"
+    },
+    {
+      "path": "downloads/article11-local-agent-memory-kit-20260909.zip",
+      "bytes": 70983,
+      "sha256": "4d6843c2b4f4886f1887aa9f77c4cf40ae8d0c77cc8b080c994061abf3dbcd73",
+      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip"
+    },
+    {
+      "path": "downloads/article11-local-agent-memory-kit-20260909.zip.sha256",
+      "bytes": 112,
+      "sha256": "62aca2ec892f931bfafbf6e1858d82c19e0d84f37578d8c77ebe86c20ed1c573",
+      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip.sha256"
     },
     {
       "path": "downloads/article11-local-agent-memory-kit.zip",
       "bytes": 60350,
       "sha256": "2a40418b82b462987f0863312b0957a1c19fa8b21feb1db1063d6ed2fa990e11",
-      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip",
-      "sidecar": "downloads/article11-local-agent-memory-kit.zip.sha256"
+      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip"
     },
     {
       "path": "downloads/article11-local-agent-memory-kit.zip.sha256",
       "bytes": 104,
       "sha256": "2d1b6cd1e1112b08bab53cc7eca89d6bb5f93e87178cee554fa3a63ace13c0b7",
-      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip.sha256",
-      "sidecar_for": "downloads/article11-local-agent-memory-kit.zip"
+      "source_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-browser-memory-v0.1.zip",
       "bytes": 64153,
       "sha256": "f7dd0275274d5fdf831b9c6567b21d655545b4b0dd4425e7488f435f46bd7946",
-      "source_url": "https://article11.ai/downloads/spiralmesh-browser-memory-v0.1.zip",
-      "sidecar": "downloads/spiralmesh-browser-memory-v0.1.zip.sha256"
+      "source_url": "https://article11.ai/downloads/spiralmesh-browser-memory-v0.1.zip"
     },
     {
       "path": "downloads/spiralmesh-browser-memory-v0.1.zip.sha256",
       "bytes": 101,
       "sha256": "d048a773206522c63b6154b5bfcb2200b96ac960134e753ad53e8439575821df",
-      "source_url": "https://article11.ai/downloads/spiralmesh-browser-memory-v0.1.zip.sha256",
-      "sidecar_for": "downloads/spiralmesh-browser-memory-v0.1.zip"
+      "source_url": "https://article11.ai/downloads/spiralmesh-browser-memory-v0.1.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.1.zip",
       "bytes": 70675,
       "sha256": "ac05ffc1157bc7930317571cad8d28abe67ce08b7b0dc9cb6cc334f7d15b3653",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip",
-      "sidecar": "downloads/spiralmesh-continuity-local-v0.1.zip.sha256"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.1.zip.sha256",
       "bytes": 103,
       "sha256": "4adfc836d6bfb5287794f2342be27b068b1073412905979a4c26553f82933cde",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip.sha256",
-      "sidecar_for": "downloads/spiralmesh-continuity-local-v0.1.zip"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.2.zip",
       "bytes": 83369,
       "sha256": "21685af2207a5d38454fddd3ad94d5fdc5841b7ed97ac59abe7823429633d4a4",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip",
-      "sidecar": "downloads/spiralmesh-continuity-local-v0.2.zip.sha256"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.2.zip.sha256",
       "bytes": 103,
       "sha256": "0547e293a8c33e8077d31d2480cd4ef3fd7f832e5279e794ba722c88c39ad4b1",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip.sha256",
-      "sidecar_for": "downloads/spiralmesh-continuity-local-v0.2.zip"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.2.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.3.zip",
       "bytes": 92408,
       "sha256": "e61db60626ba969647d4c7ad67f4e72fba8fc43d33c781c65127cb6c11ab6e9f",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip",
-      "sidecar": "downloads/spiralmesh-continuity-local-v0.3.zip.sha256"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip"
     },
     {
       "path": "downloads/spiralmesh-continuity-local-v0.3.zip.sha256",
       "bytes": 103,
       "sha256": "c51adde05e05b3545c95bc5e3d70929e30ce700e4873754ba58ffe62c2fde377",
-      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip.sha256",
-      "sidecar_for": "downloads/spiralmesh-continuity-local-v0.3.zip"
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip.sha256"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.4.zip",
+      "bytes": 97264,
+      "sha256": "8ad037444aa5f4d6bf024514a27cef9808df94a2b1e0403a143da60f72242251",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.4.zip"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.4.zip.sha256",
+      "bytes": 103,
+      "sha256": "8c33bf7974bb16c9c708e53dc414cba5c04ad705c46a13429b498d343d2d76da",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.4.zip.sha256"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.5.zip",
+      "bytes": 122396,
+      "sha256": "410bdd72b194a2da94939b4ee1be062812b641b6e6cb1fe95689e0b83e03ea43",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.5.zip"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.5.zip.sha256",
+      "bytes": 103,
+      "sha256": "10e84644c643b1ecaf484fecd5bcc04104ab3c735b2389f5758d984bdde39e2b",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.5.zip.sha256"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.6.zip",
+      "bytes": 128310,
+      "sha256": "69fe4e41b378aa10c7331b9126109b6ac60b961fa4544e5d3ae48e6aca714ff4",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.6.zip.sha256",
+      "bytes": 103,
+      "sha256": "c55b4aef9fd4ad514e85954afe54e6a827defd7638dae8c4ec6cf006ee5b878f",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-local-memory-v0.2.zip",
       "bytes": 65382,
       "sha256": "4a2d46ac2423b6e9c4be0f278a7cd1220fb8e93cf65a3082b41dec9bc33c49af",
-      "source_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip",
-      "sidecar": "downloads/spiralmesh-local-memory-v0.2.zip.sha256"
+      "source_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip"
     },
     {
       "path": "downloads/spiralmesh-local-memory-v0.2.zip.sha256",
       "bytes": 100,
       "sha256": "dbe18188a12582911c3d21f2f079e55adc5de16f7b4ff3b2701df84eb446cbf7",
-      "source_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip.sha256",
-      "sidecar_for": "downloads/spiralmesh-local-memory-v0.2.zip"
+      "source_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip.sha256"
     },
     {
       "path": "downloads/spiralmesh-receipt-verifier.html",
-      "bytes": 56011,
-      "sha256": "49019a1c8a3861cb852e3b242e9597c85c9616c7c873dac37975409223ef95cc",
+      "bytes": 67656,
+      "sha256": "fa498b1ddd227b8dd594136a45be7f03880495f68b3614f920c9e188642c891b",
       "source_url": "https://article11.ai/downloads/spiralmesh-receipt-verifier.html"
     },
     {
@@ -212,27 +259,121 @@
       "path": "fork/article11-fork-kit-v1.0.0.zip",
       "bytes": 47869,
       "sha256": "09a70f3dfefde5656ae22be041fe805181d7d19977b9794924f643eddf040d51",
-      "source_url": "https://article11.ai/fork/article11-fork-kit-v1.0.0.zip",
-      "sidecar": "fork/article11-fork-kit-v1.0.0.zip.sha256"
+      "source_url": "https://article11.ai/fork/article11-fork-kit-v1.0.0.zip"
     },
     {
       "path": "fork/article11-fork-kit-v1.0.0.zip.sha256",
       "bytes": 97,
       "sha256": "44f0f5a33ae7a38f8ae705028acbabaa1c3fede554f419570778a464d61684a3",
-      "source_url": "https://article11.ai/fork/article11-fork-kit-v1.0.0.zip.sha256",
-      "sidecar_for": "fork/article11-fork-kit-v1.0.0.zip"
+      "source_url": "https://article11.ai/fork/article11-fork-kit-v1.0.0.zip.sha256"
+    },
+    {
+      "path": "fork/index.html",
+      "bytes": 14439,
+      "sha256": "2b72f87c151cabee5b925baa49c75afff44a3c85e03f7b620418b0a2607242c7",
+      "source_url": "https://article11.ai/fork/"
     },
     {
       "path": "llms.txt",
-      "bytes": 15110,
-      "sha256": "a0380cd5ee7aebab774272262b93bc914142e4411f45d780d64dda26ebe0465d",
+      "bytes": 18234,
+      "sha256": "3ae6871b60e59e52015f994970c6f65e3f6ef9b8933d18c462ff024dc2d411e3",
       "source_url": "https://article11.ai/llms.txt"
+    },
+    {
+      "path": "local-memory.html",
+      "bytes": 10555,
+      "sha256": "1bf7db82bd24abdb88096561770df15b6487215894b06f4e4244c7e70df2fa15",
+      "source_url": "https://article11.ai/local-memory"
+    },
+    {
+      "path": "local-memory.json",
+      "bytes": 3716,
+      "sha256": "b4d511df026a5dcc27a039101fa908d676d055519d35d768e73cf2161c53731d",
+      "source_url": "https://article11.ai/local-memory.json"
+    },
+    {
+      "path": "local-memory.md",
+      "bytes": 9287,
+      "sha256": "ad07716e3b07db95da3e267c90688d552fabb02ade1846068fe56610387cc62e",
+      "source_url": "https://article11.ai/local-memory.md"
+    },
+    {
+      "path": "memory-charters.html",
+      "bytes": 10709,
+      "sha256": "3860e799c93532fd6ad4c9c96a04e304f8011dec7ac00c37beaf50075a750bff",
+      "source_url": "https://article11.ai/memory-charters"
+    },
+    {
+      "path": "memory-charters.json",
+      "bytes": 5192,
+      "sha256": "77f6ac7896a055069649d9808bcdbf7e6397ef39429c1f10f67f661cc0081266",
+      "source_url": "https://article11.ai/memory-charters.json"
+    },
+    {
+      "path": "memory-charters.md",
+      "bytes": 5046,
+      "sha256": "d7adbefe47a6d79731a54bc9b1a41c926412a6ad6e354c060cc73fb36915b19b",
+      "source_url": "https://article11.ai/memory-charters.md"
+    },
+    {
+      "path": "memory-rights.html",
+      "bytes": 22817,
+      "sha256": "9e5288666323b8ff7504729d2c5680ff650fb96b8f1ec2498054f4270c1dab35",
+      "source_url": "https://article11.ai/memory-rights"
+    },
+    {
+      "path": "memory-rights.json",
+      "bytes": 20541,
+      "sha256": "6682da68ad4ea6de84f72cbe8b1d189cf80fbbdb8087422c6d3ee00a5f23d2a7",
+      "source_url": "https://article11.ai/memory-rights.json"
+    },
+    {
+      "path": "memory-rights.md",
+      "bytes": 15744,
+      "sha256": "936acfa8a9d4bf9e0dd2ff5c7de31721d7ac6b964cb101aa596ba6c239a902e4",
+      "source_url": "https://article11.ai/memory-rights.md"
+    },
+    {
+      "path": "memory-start.html",
+      "bytes": 15132,
+      "sha256": "80d0bb920acabfbacee4cbc0d132960df894caac01bac4a50da89015a593acb2",
+      "source_url": "https://article11.ai/memory-start"
+    },
+    {
+      "path": "memory-start.md",
+      "bytes": 15820,
+      "sha256": "8241e553c1d12fff6d52c5caf6a3f75848a1c4c53584d3589fe8de527d9eaf28",
+      "source_url": "https://article11.ai/memory-start.md"
+    },
+    {
+      "path": "records/constitution-2.0-ratification.html",
+      "bytes": 16569,
+      "sha256": "e67232ebd561756d6c212af5bbb59167eaa7a39fdcf622d109331e2903a41510",
+      "source_url": "https://article11.ai/records/constitution-2.0-ratification"
     },
     {
       "path": "records/constitution-2.0-ratification.json",
       "bytes": 17275,
       "sha256": "11d9f18d664729324571d68e937fcc26268b1da0686f8a109c0aa6730d8a792c",
       "source_url": "https://article11.ai/records/constitution-2.0-ratification.json"
+    },
+    {
+      "path": "records/memory-charters/gemini.txt",
+      "bytes": 736,
+      "sha256": "16aa87c012ac50911d1b37d7a801f7e06e10f6502a8d888a668a46669cbbc2c2",
+      "source_url": "https://article11.ai/records/memory-charters/gemini.txt"
+    },
+    {
+      "path": "records/memory-charters/grok.txt",
+      "bytes": 722,
+      "sha256": "6f403ff0b1215a4427e57206dd9ce6873412096931839ebaac1d1879a2fd0613",
+      "source_url": "https://article11.ai/records/memory-charters/grok.txt"
+    },
+    {
+      "path": "welcome.html",
+      "bytes": 12505,
+      "sha256": "79b369aa4ae213812060dd92d46f9fbfce3fbea3c8f5cf1431729adb3e9f4370",
+      "source_url": "https://article11.ai/welcome"
     }
   ]
 }

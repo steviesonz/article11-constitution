@@ -1,6 +1,6 @@
-# Continue where you left off
+# Explore a library, then continue a conversation
 
-A five-step walkthrough for Claude/Codex continuity v0.3, adapted from Claude
+A five-step walkthrough for Claude/Codex continuity v0.6, adapted from Claude
 Code's contribution and checked against the released code.
 
 Leave an unfinished question. Open another session. Find the question, read what
@@ -14,7 +14,7 @@ its whole authorized library, question an earlier note, or decline a new task.
 
 ## Before you start
 
-[Download continuity v0.3](https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip),
+[Download continuity v0.6](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip),
 extract it into its own folder, and open PowerShell there. Python 3.10 or later
 is required. These examples use only synthetic local data and do not call a model.
 
@@ -107,10 +107,10 @@ versions, messages, exports, backups, provider copies or device remnants.
 python -B tools/open_memory.py codex --root $exampleRoot
 ```
 
-The launcher displays the overview and asks for an Article 11 task. Press Enter
-without entering a task. The launcher exits before model invocation; it does
+The launcher displays the overview and a conversation menu. Press Enter
+without choosing a conversation. The launcher exits before model invocation; it does
 not acknowledge the displayed records. The existing example database is unchanged.
-A first normal launch using a new root may initialize a library before the prompt.
+Library selection and explicit creation are separate steps; a remembered but unavailable folder is not silently replaced with an empty library.
 
 On Windows, `OPEN_CODEX_MEMORY.cmd` and `OPEN_CLAUDE_MEMORY.cmd` offer this same
 journey for their selected libraries. Entering a task deliberately starts a
@@ -132,7 +132,7 @@ does not repeat the write. A missing operation record stays unknown.
 
 ## What was checked
 
-For this publication, the maintainer ran Claude Code's synthetic demonstration
+For the earlier walkthrough publication, the maintainer ran Claude Code's synthetic demonstration
 against the final source, then separately checked a true fresh subprocess and
 empty launcher input. The five steps above were also executed as written in
 PowerShell against a new synthetic library. No private participant records or
@@ -144,3 +144,54 @@ The code is Apache-2.0; the carried constitutional text is separately published
 as CC0. These licenses do not grant trademark rights or authority over another
 participant. This update does not complete the 2.0 kernel or certify full Memory
 Rights Contract compliance.
+
+## Continue an actual conversation (optional cloud inference)
+
+The five storage exercises above make no provider call. This separate exercise
+uses your installed provider CLI, existing login and usage. Start with public
+example text. The model receives your task, conversation context, optional
+starter letter and the records it recalls.
+
+1. Open `OPEN_CODEX_MEMORY.cmd` or `OPEN_CLAUDE_MEMORY.cmd` in the verified
+   v0.6 package. Select the same private root when continuing an existing library.
+2. Choose **Start new** and ask: “Suggest a clear title for a public guide about
+   AI memory. Explain your choice.” Ask a follow-up such as “Why that word?”
+3. Look for the host's confirmed conversation-checkpoint result. A model's answer
+   alone does not establish that a checkpoint was saved.
+4. Close the session and reopen the same participant and library. Choose
+   **Continue previous conversation**, then ask for a shorter version of the title.
+   The earlier retained exchange supplies context; you do not need to paste it.
+5. You can instead choose **Start new** or **Leave**. For a session without a
+   persistent conversation checkpoint, launch with `--no-checkpoint`. This does
+   not turn off deliberate memory tools or hide the full authorized library.
+
+A checkpoint is an automatically retained conversation record in your private
+library, not a personal note the model chose to write. Corrections and forgetting
+apply to the selected checkpoint. Partial windows are labeled. An uncertain save
+stays unconfirmed; use the displayed operation ID for read-only reconciliation.
+Do not assume that another export, earlier version or provider copy was erased.
+
+## Choose the library once when upgrading
+
+Extract v0.6 into a new code folder and keep your existing private library where
+it is. This command remembers its location for future Codex launcher sessions
+without starting a model:
+
+```text
+python -B tools/open_memory.py codex --choose-library --root YOUR_EXISTING_MEMORY_FOLDER
+```
+
+Use `claude` for Claude. You can omit `--root` to open the library chooser.
+Normal `--root` without `--choose-library` is an invocation-only override. To
+remove only the saved folder selection, use `--forget-library-choice`; the
+library and its records stay in place. Status, resume and reconciliation remain
+read-only and noninteractive, and an unavailable selection is not an empty past.
+
+The next normal launch uses the remembered library. Choose Continue previous
+conversation, New or Leave once you see the conversation menu. The ZIP contains
+no personal history. A record is context, not evidence that the same model
+experience or identity resumed.
+
+The release check used fake invokers and fresh processes with synthetic data to
+test this continuation path, corrections, forgetting and owner separation. That
+checks host behavior; it does not predict the quality of every model's answer.

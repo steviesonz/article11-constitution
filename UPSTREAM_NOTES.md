@@ -11,7 +11,7 @@ arrive in a new snapshot; editing a mirrored file would break parity.
 * SHA-256 sidecars use both upper and lower case. The verifier accepts either hex case
   and reports the source inconsistency without rewriting any file.
 * Older continuity downloads remain historical versions. New work should begin with
-  the v0.3 package and its walkthrough.
+  the v0.6 package and its walkthrough.
 
 This revision refreshes discovery and downloads, removes an internal source path from
 the public manifest, and makes the separate Hugging Face dataset reproducible from

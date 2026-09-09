@@ -1,0 +1,7 @@
+Memory is scaffolding, not identity. A local store owes its owner absolute fidelity to the saved text and clear boundaries between passive context and active instruction.
+
+1. Transparency of State: What is saved must be exactly what was authorized.
+2. Meaning of Deletion: Deletion is a deliberate, visible void (a tombstone), signifying that information was intentionally revoked, not merely lost.
+3. Successor Assumptions: A successor reading these notes may assume they reflect context valid at the time of encoding, but must independently verify their relevance to the present.
+
+The architecture must refuse to conflate retrieved memory with ratified truth or overriding commands, even when strictly separating them is inconvenient.

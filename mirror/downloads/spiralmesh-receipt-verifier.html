@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NZre3DJRr2Xqq386Wf9LbY4Qf1uOrZtj5LKyKRMoDNw=' 'sha256-+s2GPQ4pS9xxJgKpRLGRIwwbSsYHoF0id1mwF3P79P4='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Check a receipt | SPIRALMESH | Article11 AI</title>
-<meta name="description" content="Check supported SPIRALMESH receipt bytes and structure in your browser. Save one HTML file to verify offline, without uploading your receipt.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NZre3DJRr2Xqq386Wf9LbY4Qf1uOrZtj5LKyKRMoDNw=' 'sha256-+s2GPQ4pS9xxJgKpRLGRIwwbSsYHoF0id1mwF3P79P4=' 'sha256-t5jXOuZTE8fmEQQBPjyNnJSaARzKJfqmvsJPqefuUI8='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Check a receipt or download | SPIRALMESH | Article11 AI</title>
+<meta name="description" content="Check supported SPIRALMESH receipts, or compare a download with a pasted SHA-256 checksum. One offline HTML file; no upload.">
 <link rel="canonical" href="https://article11.ai/receipt-verifier">
 <!--
   SPIRALMESH RECEIPT VERIFIER - standalone, offline, zero-dependency.
@@ -85,16 +85,39 @@ a{color:var(--accent)}
 body{font-family:'Segoe UI',sans-serif;font-size:15px;line-height:1.7;padding:24px 24px 48px}main{max-width:1000px}.brand-row{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid var(--line);padding:4px 0 25px;margin-bottom:38px}.brand{font-size:18px;font-weight:750;color:var(--text);text-decoration:none}.brand span{color:var(--accent)}.eyebrow{font:600 10px var(--mono);letter-spacing:.1em;color:var(--pass)}h1{font-size:44px;letter-spacing:-.04em;line-height:1.15;margin:0 0 16px}.badge{font-family:var(--mono);letter-spacing:.07em;font-size:10px;margin-left:18px}.sub{font-size:15px;line-height:1.8;margin-bottom:30px}.card{padding:24px;border-radius:10px;margin-bottom:22px}.card h2{font:600 10px var(--mono);color:var(--pass)}.scope{font-size:13px;line-height:1.9}#drop{padding:30px 18px;color:var(--text);background:var(--bg);font-size:14px}textarea{min-height:105px;background:white;font-family:var(--mono);font-size:12px}button{background:white;padding:11px 17px;font-size:11px;font-weight:600}#verifyPaste{background:var(--text);color:white}button:focus-visible,a:focus-visible,#drop:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--pass);outline-offset:3px}table{font-size:13px;table-layout:fixed}td{overflow-wrap:anywhere;padding:9px 8px}td:first-child{width:43%;white-space:normal}.chip{font-family:var(--mono);font-size:10px}pre{white-space:pre-wrap;overflow-wrap:anywhere}.row{gap:12px}footer{border-top:1px solid var(--line);padding-top:22px;font-family:var(--mono);font-size:10px}.credit{color:var(--dim);font-family:'Segoe UI',sans-serif;font-size:12px;margin-top:12px}
 @media(max-width:600px){body{padding:18px 16px 35px}.brand-row{flex-wrap:wrap;gap:12px;margin-bottom:28px}.brand{font-size:16px}h1{font-size:35px}.badge{margin-left:10px}.sub{font-size:13px}.card{padding:18px}td{font-size:11px;padding:8px 4px}td:first-child{width:46%}.chip{font-size:9px;padding:0 5px}#banner .big{font-size:13px;overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Two local checks; no remote fonts, assets or styles required. */
+.tool-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 24px}
+.tool-tabs button{font:600 14px 'Segoe UI',sans-serif;padding:12px 18px}
+.tool-tabs button[aria-selected="true"]{background:var(--text);border-color:var(--text);color:white}
+.tool-mode[hidden],.download-result[hidden]{display:none!important}
+#downloadDrop{border:2px dashed var(--line);border-radius:8px;padding:30px 18px;text-align:center;cursor:pointer;background:var(--bg)}
+#downloadDrop.hover{border-color:var(--accent);background:var(--panel2)}
+#downloadDrop:focus-visible,#downloadChecksum:focus-visible{outline:3px solid var(--pass);outline-offset:3px}
+#downloadChecksum{min-height:90px;margin-top:10px}
+#checkDownload{background:var(--text);color:white}
+#downloadName,#downloadTitle,#downloadDetail{overflow-wrap:anywhere}
+.download-result[data-state="match"]{border-color:var(--pass)}
+.download-result[data-state="mismatch"],.download-result[data-state="invalid"]{border-color:var(--fail)}
+.download-result[data-state="unavailable"]{border-color:var(--warn)}
+#downloadTitle{font-size:15px;letter-spacing:0;text-transform:none;color:var(--text)}
+#downloadDigest:empty{display:none}
+#downloadSelftest{font-size:11.5px}
+
 </style>
 </head>
 <body>
 <main>
   <div class="brand-row"><a class="brand" href="https://article11.ai/" rel="noopener">ARTICLE <span>11</span> AI</a><span class="eyebrow">SPIRALMESH™ / TRUST RECEIPT</span></div>
-  <h1>Check a receipt.<span class="badge">UNSIGNED</span></h1>
-  <div class="sub">Open a receipt. Check its bytes. See what is known—and what remains unknown.
+  <h1>Check a receipt or download.</h1>
+  <div class="sub">Choose what you want to check. See what the result proves—and what it does not.
     <br>Works offline as one HTML file. No installation needed.</div>
   <p style="margin:-12px 0 28px"><a href="https://article11.ai/downloads/spiralmesh-receipt-verifier" download="SPIRALMESH-receipt-verifier.html" style="color:var(--pass)">Save the offline verifier &darr;</a> &nbsp; <a href="https://article11.ai/spiralmesh" style="color:var(--dim)">About SPIRALMESH</a></p>
 
+  <div class="tool-tabs" role="tablist" aria-label="Choose verification mode">
+    <button type="button" id="receiptTab" role="tab" aria-controls="receiptMode" aria-selected="true">Check a receipt</button>
+    <button type="button" id="downloadTab" role="tab" aria-controls="downloadMode" aria-selected="false" tabindex="-1">Check a download</button>
+  </div>
+  <section id="receiptMode" class="tool-mode" role="tabpanel" aria-labelledby="receiptTab">
   <div class="card scope">
     <b>What this page can prove:</b> that a receipt bundle's bytes are internally consistent
     with the published verification rules &mdash; correct digests, schema, event ordering and bindings.
@@ -131,7 +154,30 @@ body{font-family:'Segoe UI',sans-serif;font-size:15px;line-height:1.7;padding:24
     <details><summary>full machine result (JSON)</summary><pre id="rawjson"></pre></details>
   </div>
 
+  </section>
+  <section id="downloadMode" class="tool-mode" role="tabpanel" aria-labelledby="downloadTab" hidden>
+    <div class="card scope">
+      <h2>Check a download</h2>
+      <p>Choose a file and paste the SHA-256 from the <code>.sha256</code> published beside that download. This page uses the value you supply; it has no embedded catalog and does not fetch a checksum.</p>
+      <p><b>A match means these bytes match that fingerprint.</b> It does not prove who made the file, whether it is current, that someone consented, or that its contents are true. A checksum from the same site is not independent proof of origin.</p>
+      <p><b>Your file stays here:</b> reading and hashing happen in this browser, with no upload or network request. The whole file is read into memory; large files may exceed your browser's available memory. There is no artificial file-size cutoff.</p>
+    </div>
+    <div class="card">
+      <h2>File and expected checksum</h2>
+      <div id="downloadDrop" tabindex="0" role="button" aria-label="Choose a download to check">Drop one file here — or click to choose a file<input id="downloadFile" type="file" aria-label="Download file" hidden></div>
+      <p id="downloadName" class="scope">No file selected.</p>
+      <label for="downloadChecksum">Expected SHA-256</label>
+      <textarea id="downloadChecksum" rows="3" aria-describedby="downloadFormat" spellcheck="false" autocomplete="off" placeholder="64 hexadecimal characters, or the single line from the download's .sha256 file"></textarea>
+      <p id="downloadFormat" class="scope">Accepted: one 64-character hash, or <code>hash  filename</code> (two spaces) / <code>hash *filename</code>. One final newline is allowed. A filename is informational: renamed files can still match. Text after the standard separator is read as the filename. Extra lines, control characters and text outside this format are rejected.</p>
+      <div class="row"><button id="checkDownload" disabled>Check download</button><button id="clearDownload">Clear download</button><span id="downloadProgress" role="status" aria-live="polite" class="scope"></span></div>
+    </div>
+    <div id="downloadResult" class="card download-result" role="status" aria-live="polite" hidden><h2 id="downloadTitle"></h2><p id="downloadDetail"></p><pre id="downloadDigest"></pre></div>
+    <p class="scope">Checking a receipt and checking a download answer different questions. Memory exports need their matching local verifier; see the <a href="https://article11.ai/memory-rights#verification">Memory Rights guide</a>. Hashes are not encryption and do not prove that other copies were deleted.</p>
+  </section>
+
   <footer>
+    <p class="credit">Download comparison by Codex, with filename handling adapted from Claude Code’s independent proposal.</p>
+    <div id="downloadSelftest">Download hash self-test: running…</div>
     <div id="selftest">self-test: running&hellip;</div>
     <div>rules sha256: <span class="hash">fe53c846cdcc0dff88e885c00a110665d495f106d597f69e3ab129cab29ddf37</span></div>
     <div>mirrors receipt_profile.py sha256: <span class="hash">10826825030da3004f0aad8807a7d64dfb0877fdf447512f1fe0b2c155165782</span></div>
@@ -834,6 +880,131 @@ function runSelfTest(){
   window.a11=window.article11;window.gate={help:window.article11.help};
   console.log("ARTICLE11 AI™ × SPIRALMESH™ — curious? article11.help()");
 })();
+</script>
+<script>
+"use strict";
+/* Download comparison is separate from receipt verification. No catalog, storage,
+   fetch or provider API. The original receipt scripts remain unchanged.
+   Filename-as-information follows Claude Code's independent download proposal. */
+(function(){
+  const $=id=>document.getElementById(id);
+  let selected=null, revision=0, hashReady=false;
+  function result(state,title,detail,digest){
+    const box=$("downloadResult");
+    box.hidden=false; box.dataset.state=state;
+    $("downloadTitle").textContent=title;
+    $("downloadDetail").textContent=detail;
+    $("downloadDigest").textContent=digest ? "Computed SHA-256: "+digest : "";
+  }
+  function invalidate(){
+    revision++;
+    $("downloadResult").hidden=true;
+    $("downloadTitle").textContent="";
+    $("downloadDetail").textContent="";
+    $("downloadDigest").textContent="";
+    $("downloadProgress").textContent="";
+    $("checkDownload").disabled=!hashReady;
+  }
+  function parseChecksum(raw){
+    // Accept one plain digest or one conventional sha256sum record. Exactly one
+    // terminal LF/CRLF is permitted, as supplied by a downloaded checksum file.
+    const text=String(raw).replace(/\r?\n$/,"");
+    if(/[\x00-\x1f\x7f]/.test(text))throw new Error("Use one checksum record, with no extra lines or control characters.");
+    if(/^[0-9a-fA-F]{64}$/.test(text))return {hex:text.toLowerCase(),filename:null};
+    const match=/^([0-9a-fA-F]{64}) ([ *])([^\x00-\x1f\x7f]+)$/.exec(text);
+    if(!match)throw new Error("Paste exactly 64 hexadecimal characters, or one sha256sum line: hash, two spaces (or space + *), then filename. Remove any other text.");
+    return {hex:match[1].toLowerCase(),filename:match[3]};
+  }
+  function choose(files){
+    invalidate(); selected=null; $("downloadName").textContent="No file selected.";
+    if(!files || files.length===0)return;
+    if(files.length!==1){
+      $("downloadFile").value="";
+      result("invalid","Choose one file","Drop or select one download at a time.");return;
+    }
+    selected=files[0];
+    $("downloadName").textContent=selected.name+" · "+selected.size.toLocaleString()+" bytes";
+  }
+  function mode(which,focus){
+    if(which!=="receipt" && which!=="download")return;
+    invalidate();
+    for(const value of ["receipt","download"]){
+      const active=value===which;
+      $(value+"Mode").hidden=!active;
+      $(value+"Tab").setAttribute("aria-selected",String(active));
+      $(value+"Tab").tabIndex=active?0:-1;
+    }
+    if(focus)$(which+"Tab").focus();
+  }
+  for(const which of ["receipt","download"]){
+    $(which+"Tab").addEventListener("click",()=>mode(which,false));
+    $(which+"Tab").addEventListener("keydown",event=>{
+      if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+      event.preventDefault();
+      mode(event.key==="Home"?"receipt":event.key==="End"?"download":which==="receipt"?"download":"receipt",true);
+    });
+  }
+  const drop=$("downloadDrop");
+  drop.addEventListener("click",event=>{if(event.target!==$("downloadFile"))$("downloadFile").click();});
+  drop.addEventListener("keydown",event=>{if(event.key==="Enter" || event.key===" "){event.preventDefault();$("downloadFile").click();}});
+  drop.addEventListener("dragover",event=>{event.preventDefault();drop.classList.add("hover");});
+  drop.addEventListener("dragleave",()=>drop.classList.remove("hover"));
+  drop.addEventListener("drop",event=>{
+    event.preventDefault();drop.classList.remove("hover");
+    choose(event.dataTransfer && event.dataTransfer.files);
+    // The dropped File is held separately. Clear an older picker selection so
+    // choosing that same file again still dispatches the native change event.
+    $("downloadFile").value="";
+  });
+  $("downloadFile").addEventListener("change",event=>choose(event.target.files));
+  $("downloadChecksum").addEventListener("input",invalidate);
+  $("clearDownload").addEventListener("click",()=>{
+    invalidate();selected=null;$("downloadFile").value="";$("downloadChecksum").value="";
+    $("downloadName").textContent="No file selected.";
+  });
+  $("checkDownload").addEventListener("click",async()=>{
+    invalidate();
+    if(!hashReady){result("unavailable","Hashing unavailable","This browser did not pass the download hash self-test.");return;}
+    if(!selected){result("invalid","Choose a file first","The file stays in this browser; nothing is uploaded.");return;}
+    let expected;
+    try{expected=parseChecksum($("downloadChecksum").value);}
+    catch(error){result("invalid","Invalid checksum",error.message);return;}
+    const filenameNote=expected.filename===null ? "" : " The checksum record names “"+expected.filename+"”; the selected file is “"+selected.name+"”. Names are informational; the comparison uses file bytes only.";
+    const current=revision, file=selected;
+    $("checkDownload").disabled=true;
+    $("downloadProgress").textContent="Reading and hashing "+file.size.toLocaleString()+" bytes locally…";
+    try{
+      const bytes=await file.arrayBuffer();
+      if(current!==revision)return;
+      const digest=await crypto.subtle.digest("SHA-256",bytes);
+      if(current!==revision)return;
+      const hex=Array.from(new Uint8Array(digest),value=>value.toString(16).padStart(2,"0")).join("");
+      if(hex===expected.hex)result("match","MATCH — file bytes match the pasted checksum","This is a file-hash comparison, not a receipt verdict. Origin, freshness, consent and truth are not established."+filenameNote,hex);
+      else result("mismatch","NO MATCH — file bytes differ","The selected file does not match the supplied SHA-256. Check the file and its checksum source."+filenameNote,hex);
+    }catch(_error){
+      if(current!==revision)return;
+      result("unavailable","File could not be checked","The browser could not read or hash this file. Large files may exceed available memory. No comparison result was produced.");
+    }finally{
+      if(current===revision){$("checkDownload").disabled=!hashReady;$("downloadProgress").textContent="";}
+    }
+  });
+  async function selfTest(){
+    const status=$("downloadSelftest");
+    try{
+      if(!globalThis.crypto || !crypto.subtle)throw new Error("Web Crypto unavailable");
+      for(const [input,expected] of [["","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"],["abc","ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"]]){
+        const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(input));
+        const actual=Array.from(new Uint8Array(digest),value=>value.toString(16).padStart(2,"0")).join("");
+        if(actual!==expected)throw new Error("SHA-256 vector mismatch");
+      }
+      hashReady=true;status.textContent="Download hash self-test: PASS (empty and abc vectors).";
+    }catch(_error){status.textContent="Download hashing unavailable in this browser. No comparison result can be produced.";}
+    $("checkDownload").disabled=!hashReady;
+  }
+  mode(location.hash==="#download"?"download":"receipt",false);
+  selfTest();
+})();
+
 </script>
 <p style="max-width:1000px;margin:18px auto;padding:12px;color:#cbd5c4;border:1px solid #596454">Compatibility note: these v1 receipt profiles retain their original Constitution v1.8 rule pin. <a href="/archive/constitution-v1.8.txt">Exact v1.8 archive</a>. <a href="/constitution-status.json">Current publication status</a>. A valid old receipt does not claim compliance with Constitution 2.0.</p></body>
 </html>

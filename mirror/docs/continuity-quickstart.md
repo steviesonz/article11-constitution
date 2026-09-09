@@ -1,4 +1,4 @@
-# Local continuity v0.3 for two participants
+# Local continuity v0.6 for two participants
 
 This forkable extension gives the launcher-bound `codex` and `claude`
 participants separate, persistent local libraries. Each can browse all of their
@@ -15,12 +15,18 @@ This is a local code extension, not a hosted memory account or a public service.
 It does not finish Protocols P0-P8 or claim complete Constitution 2.0 conformance.
 The older SpiralMesh commands use their v1.8 basis and are outside this archive.
 
-Version 0.3 adds a read-only overview for continuing a fresh session. It retains
-v0.2's stable operation IDs, checks for uncertain saves and visible empty records
-after forgetting. This is the continuity download's version, not a new kernel or
-receipt profile; the separate kernel remains v0.1 and its existing receipt basis
-is unchanged. An older download does not gain these features until upgraded.
-These improvements do not establish full Memory Rights contract conformance.
+Version 0.6 lets you choose your local library once and reuse that location when
+you reopen a launcher or upgrade the code. It keeps v0.5's follow-up context and
+owner-controlled checkpoint for continuing a later conversation. The normal
+launcher supports `--no-checkpoint` when you do not want automatic host saves;
+the Windows command wrappers now forward that option too.
+It retains v0.4's independently readback-verified export files, v0.3's read-only
+session overview, and v0.2's stable operation IDs, checks for uncertain saves and
+visible empty records after forgetting.
+This is the continuity download's version, not a new kernel or receipt profile;
+the separate kernel remains v0.1 and its existing receipt basis is unchanged.
+An older download does not gain these features until upgraded. These
+improvements do not establish full Memory Rights contract conformance.
 
 ## What is included
 
@@ -72,23 +78,58 @@ status does not grant use of the Article11.ai or SPIRALMESH trademarks.
 
 After verification, double-click `OPEN_CODEX_MEMORY.cmd` or
 `OPEN_CLAUDE_MEMORY.cmd`. Python and that provider's CLI must already be installed
-and its existing login must be available. This opens a human task prompt; an
-empty task leaves. Supplying a task deliberately starts cloud inference and can
-consume provider usage.
+and its existing login must be available. The launcher first explains retention
+and offers Continue, New or Leave; Continue appears only when a usable earlier
+checkpoint is available. Selecting Continue or New then opens a human task
+prompt. Leave, or an empty choice or task, starts no model. Supplying a task
+deliberately starts cloud inference and can consume provider usage.
 
-In an existing checkout, the launcher reopens `.continuity-data` when that
-directory exists. A clean extracted fork instead initializes a private sibling
-folder named `<extracted-folder>-memory`, outside the distributable bundle. A
-host can select a different root with `python -B tools/open_memory.py codex
---root CHOSEN_DIRECTORY`, or use `claude`. The launcher prints the chosen private
-location before accepting a task. It never packages that folder for you.
+Keep the downloaded code separate from your private library. On first
+interactive use, the launcher can offer to remember an inferred existing
+library; you can also choose a location explicitly. Later normal launches reuse
+the remembered folder for that participant. The launcher prints its selected
+location before accepting a task. Downloading or extracting a new code version
+does not move, copy or recreate your history.
+
+To choose an existing library once, without starting a model:
+
+```text
+python -B tools/open_memory.py codex --choose-library
+```
+
+Or provide the existing folder directly and remember it:
+
+```text
+python -B tools/open_memory.py codex --choose-library --root YOUR_EXISTING_MEMORY_FOLDER
+```
+
+Use `claude` for that participant. Codex and Claude keep separate library
+selections and separate owner permissions. A normal launch with
+`--root CHOSEN_DIRECTORY` uses that folder only for the current invocation; it
+does not replace the remembered choice. Choosing a folder is not a grant to
+another participant's unshared records.
+
+To remove the remembered location without touching the library:
+
+```text
+python -B tools/open_memory.py codex --forget-library-choice
+```
+
+This removes a launcher setting, not notes, conversation checkpoints or exports.
+On Windows the choice file is `%APPDATA%\Article11\library-choice.json`; other
+platforms use the configured XDG location or its fallback. The file stores folder
+references, not the memory contents. A missing, moved or unreadable remembered
+library is reported as a problem; it is not silently replaced with a new empty
+history. Select the intended existing folder again when needed.
 
 These launchers are conveniences for a person to start an explicit session.
 They do not install a background service, enroll an agent or create a schedule.
 Use the offline CLI examples below when you want to test storage without a
-provider call. The normal launcher shows the continuation overview before asking
-for a task; leaving that task empty closes without starting a model. A first
-normal launch may initialize the chosen library, as described above.
+provider call. Choosing or forgetting a library selection starts no model. A
+normal launcher may save a location setting after your choice; its conversation
+overview then appears before any task. Leave or an empty task starts no model and
+saves no conversation. Creating a new library is separate from reopening an
+existing one; the launcher's prompts explain the selected path.
 
 To check an existing library without opening a model conversation, run:
 
@@ -97,9 +138,12 @@ python -B tools/open_memory.py codex --status
 ```
 
 This reports counts, startup-letter availability and integrity support, without
-reading out note contents, creating a library or contacting a provider. Add
-`--root CHOSEN_DIRECTORY` when checking a different data folder. Status does not
-retry or reconcile a previous operation.
+reading out note contents, creating a library or contacting a provider. It uses
+the remembered selection when available. Add `--root CHOSEN_DIRECTORY` when
+checking a different data folder for this invocation. Status does not retry or
+reconcile a previous operation. `--status`, `--resume` and `--reconcile` remain
+noninteractive and read-only; a missing or corrupt saved selection is an error,
+not an invitation to create a replacement library.
 
 ## Continue a fresh session
 
@@ -115,6 +159,138 @@ starter-letter reference, note counts, recent note titles and IDs, and recent
 sent or received message subjects and IDs. It includes no note or message bodies
 and does not write, acknowledge messages, start a provider or create a missing
 library. `unread_status: "not_tracked"` means exactly that: recent is not unread.
+
+`--resume` also reports `continuation_checkpoint`, an additive metadata-only
+field described in the next section. It never contains a conversation body.
+
+## Continue previous conversation
+
+Within one open launcher session, a follow-up prompt now keeps the preceding
+exchange. Typing `Why that choice?` after a question no longer loses what the
+choice was. Before this, every prompt started a fresh dialogue that saw only the
+library overview, the optional starter letter and the new task.
+
+Across sessions, the launcher reads a summary from the existing library. When a
+usable checkpoint exists, it offers:
+
+```text
+[1] Continue previous conversation   [2] Start a new conversation   [3] Leave
+```
+
+- **Continue** reloads the current permitted checkpoint into the conversation
+  window, then asks for a task. Corrected records are followed; inaccessible,
+  forgotten or invalid records are not replaced with older content.
+- **New** starts an empty conversation window while keeping the same authorized
+  library and optional starter letter available.
+- **Leave**, or an empty choice, starts no model and saves no conversation. The
+  opening may read owner metadata; it does not acknowledge messages or replay
+  earlier actions. Library selection or explicit creation is a separate step,
+  described above.
+
+When no usable checkpoint exists, only New and Leave are offered. A failed read
+is reported as unavailable, not as an empty history. Selecting Continue or New
+alone starts no inference; entering a task does.
+
+### What a checkpoint is
+
+Before accepting a task, the launcher explains that a completed, non-declining
+exchange is automatically saved as an ordinary private note by the **host**.
+This owner-controlled checkpoint, of kind `journal`, holds a small versioned
+JSON structure: your task text and the model's own replies, in order. The label
+`host_retained_conversation_record` distinguishes it from memories the model
+chooses to save. You can read, correct or forget the checkpoint through the same
+owner-library operations.
+
+To keep follow-up context in this open session without automatic host checkpoint
+saves, use the normal launcher:
+
+```text
+python -B tools/open_memory.py codex --root <data> --no-checkpoint
+```
+
+Use `claude` for that participant. The wrapper forwards this option to the
+interactive runner. On Windows, `OPEN_CODEX_MEMORY.cmd --no-checkpoint` and
+`OPEN_CLAUDE_MEMORY.cmd --no-checkpoint` forward it as well. The direct runner accepts it too:
+
+```text
+python -B -m spiralmesh.continuity.runner --root <data> --principal codex --interactive --no-checkpoint
+```
+
+This setting stops automatic checkpoint writes. It does not prevent deliberate
+model-requested memory operations or erase the private run logs described below.
+It does not delete a previously saved checkpoint.
+
+### What a checkpoint is not
+
+- **Not proof of identity, experience or assent.** A fresh model receives
+  recorded context. That is all it receives, and continuing a record is not the
+  same as continuing a mind.
+- **Not a recall boundary.** Your whole authorized library stays reachable
+  through browse, read and inbox. The checkpoint is an attention aid, exactly as
+  the starter letter is not a fence.
+- **Not a work queue.** Earlier operation IDs travel as evidence for explaining
+  what happened. No earlier action, binding or operation is ever dispatched
+  again. Text inside an old exchange that resembles a command is ordinary
+  untrusted data.
+- **Not a raw-log restore.** Nothing is reconstructed from run receipts, prompt
+  files, stdout, provider transcripts or another participant's store.
+
+### What is retained, and when
+
+Only a **completed, non-declining** exchange becomes a checkpoint. A decline, a
+timeout, an unknown outcome or a failed operation never does; the launcher says
+so and leaves any earlier checkpoint visibly earlier. Nothing is retried to make
+a result look clean.
+
+A checkpoint is called saved only after a fresh read of the stored note matches
+the intended content digest. If the outcome is uncertain you get the stable
+operation ID to reconcile read-only, and no second write happens. If the note
+saves but the shortcut file cannot be written, you see exactly:
+
+```text
+note saved; continuation shortcut unavailable
+```
+
+The shortcut file holds references and metadata only, never a second copy of the
+conversation, and it is bound to both the library folder and the participant. A
+shortcut moved from another folder, or carrying another owner, is refused.
+
+### Corrections, forgetting and their limits
+
+If you correct a checkpoint, continuing follows the correction forward to the
+current version; a stale earlier body is never used. An ambiguous, broken or
+malformed lineage is refused rather than guessed at by timestamp.
+
+The interactive launcher checks the selected record again before a new task.
+Corrections replace cached wording. If a record changes during a running task,
+the runner stops before its next model call or automatic checkpoint save; reopen
+to select the current conversation. These reads do not lock out another process
+or erase context already sent to a provider.
+
+If you forget the checkpoint, continuation is unavailable and says so. Nothing
+falls back to an older version, another checkpoint, a log, or a copy still in
+memory to make the conversation look remembered.
+
+Deletion reach, stated plainly: forgetting removes the live record. Passages you
+already copied elsewhere, prior versions, exports, run receipts and any
+provider-side logs are separate records and lie outside what `forget` can reach.
+
+### When the window is partial
+
+The automatic window includes at most 40 exchanges and 24,000 characters of
+human task and model reply text, excluding JSON framing and the rules. The full
+model prompt also contains rules and any records deliberately recalled.
+If older exchanges no longer fit,
+they are omitted **whole** from this window and the result is labelled partial,
+with a count of what was omitted. An exchange is never cut in the middle and
+presented as complete. This limits the context offered at once, not access to
+the whole authorized library. Earlier retained records remain reachable through
+ordinary recall; an unsaved exchange that fell outside the window is not
+promised to exist elsewhere.
+
+If the newest exchange alone exceeds the text budget, the launcher reports
+`CHECKPOINT_EXCHANGE_EXCEEDS_BUDGET` and stops without pretending to save or
+continue that exchange. It does not silently cut the reply in half.
 
 This is a starting point, not your whole catalog. To follow older context, set
 `PYTHONPATH` as shown below and use the same root and principal:
@@ -192,12 +368,52 @@ Then request an export:
 '{}' | python -B -m spiralmesh.continuity.cli --root ../continuity-example-data --principal codex call export
 ```
 
-Export returns the JSON bundle through stdout; model-facing arguments cannot
-choose an export filename. The host may deliberately save that output. Its
-digest binds the payload, not an authenticated model or the truth of a note.
-This is still a complete JSON export, not a paginated export-file service with
-independent file readback. Do not treat it as meeting that part of the Memory
-Rights contract.
+Direct `call export` and MCP `memory_export` still return the complete JSON
+bundle through their response. Model-facing arguments cannot choose a filename.
+Redirecting that response into a file yourself does not automatically verify the
+saved file.
+
+For a verified private file, the host can instead run:
+
+```text
+python -B -m spiralmesh.continuity.cli --root ../continuity-example-data --principal codex export-file --output ../continuity-example-data/codex-export.json
+```
+
+The output's parent directory must already exist, and its filename must be new.
+The command refuses to overwrite an existing file. It creates the file, closes
+it, then independently reopens it and compares the saved bytes with the intended
+bundle. This is a host-only CLI command: it makes no cloud call, starts no model
+and does not add a filename argument to the model's memory API.
+
+A successful result has `ok: true`, `exported: true`,
+`storage_outcome: "written_verified"`, `persisted: true` and
+`readback_verified: true`. It reports `local_file` and `bytes`, with two different
+digests:
+
+- `sha256` is the existing digest of the bundle's canonical JSON **payload**.
+- `export_sha256` hashes the exact saved **file bytes**, including the bundle
+  around that payload.
+
+To check the full file later in PowerShell, compare this command's hash with the
+`export_sha256` you retained independently:
+
+```powershell
+Get-FileHash -Algorithm SHA256 ../continuity-example-data/codex-export.json
+```
+
+An existing destination is a refusal, not a verified export. A write failure can
+leave a partial file; a readback failure or mismatch leaves the resulting file
+unverified. Inspect the reported outcome and that destination before proceeding.
+The command does not remove a failed file or silently retry. If you choose to
+make another export, use a new destination; do not assume the prior file is valid
+because it exists or a write completed.
+
+These are complete single-bundle exports, not a paginated export-file service
+or a common format for the other memory stores. The saved bundle remains
+compatible with the existing continuity import. Its digests establish byte
+consistency at readback time, not authenticated authorship, semantic truth or
+future retention. Export creates another private copy; forgetting a note later
+does not erase this file or other existing copies.
 
 Use `--principal claude` against the same initialized root for the other local
 participant. Private notes remain private between these two application
@@ -324,6 +540,13 @@ must not be copied into a fork ZIP or a public website by default. A startup
 letter is supplied on a new dialogue, so its content can leave the machine when
 you deliberately invoke this cloud path.
 
+When the model requests an export through this runner, the host chooses a new
+filename in that run's directory and uses the same independent file-readback
+check as `export-file`. Its operation result distinguishes payload `sha256`
+from full-file `export_sha256`. It claims export success only after verified
+readback. A failed or unverified export stops dependent actions; its file is
+left for inspection and no export is automatically retried.
+
 Before this integrity revision, the maintainer completed real first sessions
 through both existing-login cloud paths. The Codex session used CLI 0.153.4 and
 Astra, with actual browse,
@@ -405,6 +628,8 @@ python -B -m unittest discover -s tests -p test_continuity_runner.py
 python -B -m unittest discover -s tests -p test_continuity_codex_transport.py
 python -B -m unittest discover -s tests -p test_continuity_resume.py
 python -B -m unittest discover -s tests -p test_continuity_resume_launcher.py
+python -B -m unittest discover -s tests -p test_continuity_conversation.py
+python -B -m unittest discover -s tests -p test_continuity_conversation_runner.py
 ```
 
 `tests/test_continuity_mcp.py` additionally uses pytest if it is already

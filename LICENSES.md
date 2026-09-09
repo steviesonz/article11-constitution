@@ -17,8 +17,8 @@ inferred from a description of it.
 | Archive | Licence, as shipped inside it |
 | --- | --- |
 | `mirror/downloads/spiralmesh-local-memory-v0.2.zip` | **Apache-2.0** for the new store, runner, launchers, packaging tools and starter docs (`LICENSE`). **CC0 1.0** for the reused `dialogue.py` and the carried Constitution Core (`LICENSE-LOCAL-MEMORY-CC0.txt`, `NOTICE-LOCAL-MEMORY.md`). |
-| `mirror/downloads/spiralmesh-continuity-local-v0.1.zip`, `v0.2` and `v0.3` | **Apache-2.0** (`LICENSE`), with the carried constitution under **CC0 1.0** (`LICENSE-CONSTITUTION.txt`). |
-| `mirror/downloads/article11-local-agent-memory-kit.zip` | **CC0 1.0 Universal** (`LICENSE`). |
+| `mirror/downloads/spiralmesh-continuity-local-v0.1.zip` through `v0.6` | **Apache-2.0** (`LICENSE`). The carried Constitution 2.0 Core is separately published under **CC0 1.0**; the retained `LICENSE-CONSTITUTION.txt` names the historical v1.8 path, as disclosed in the current quickstart. |
+| `mirror/downloads/article11-local-agent-memory-kit.zip` and `article11-local-agent-memory-kit-20260909.zip` | **CC0 1.0 Universal** (`LICENSE`). The dated kit's `THIRD_PARTY_NOTICES.md` preserves the separate terms of externally installed dependencies, models and host adapters. |
 | `mirror/fork/article11-fork-kit-v1.0.0.zip` | See the fork documentation alongside it; the constitution content it carries is CC0. |
 | `mirror/downloads/article11-constitution-2.0-starter.zip` | **No licence file is shipped.** See below. |
 

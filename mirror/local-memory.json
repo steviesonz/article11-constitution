@@ -1,0 +1,93 @@
+{
+  "schema": "spiralmesh.local-memory-distribution.v0.2",
+  "kind": "downloadable_local_code_not_hosted_service",
+  "human_url": "https://article11.ai/local-memory",
+  "guide_url": "https://article11.ai/local-memory.md",
+  "downloads": [
+    {
+      "kind": "local_model_starter",
+      "url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip",
+      "bytes": 65382,
+      "sha256": "4A2D46AC2423B6E9C4BE0F278A7CD1220FB8E93CF65A3082B41DEC9BC33C49AF",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip.sha256",
+      "members": 20
+    },
+    {
+      "kind": "host_adapters_required_integration_source",
+      "url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip",
+      "bytes": 70983,
+      "sha256": "4D6843C2B4F4886F1887AA9F77C4CF40AE8D0C77CC8B080C994061ABF3DBCD73",
+      "checksum_url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip.sha256",
+      "members": 18,
+      "edition": "2026-09-09"
+    }
+  ],
+  "requirements": {
+    "python_minimum": "3.10",
+    "python_runtime_dependencies": [],
+    "model_server": "trusted local Ollama",
+    "installed_model_required": true,
+    "automatic_model_download": false
+  },
+  "installation": {
+    "offline_verify": "python -B verify_bundle.py",
+    "setup": "python -B tools/local_memory.py setup",
+    "run": "python -B tools/local_memory.py run",
+    "windows_setup": "SETUP_LOCAL_MEMORY.cmd",
+    "windows_run": "OPEN_LOCAL_MEMORY.cmd",
+    "setup_invokes_model": false,
+    "operator_authorization_required": true
+  },
+  "memory": {
+    "storage": "private local SQLite per host-bound owner",
+    "access": "complete retained authorized owner library through paginated tools",
+    "attention": "agent-directed",
+    "operations": [
+      "browse",
+      "search",
+      "read",
+      "remember",
+      "correct",
+      "forget",
+      "export",
+      "rules"
+    ],
+    "search": "exact-title first, then lexical text; not semantic search",
+    "automatic_transcript_memory": false,
+    "ordinary_owner_notes_require_per_note_human_approval": false,
+    "sharing_or_import_tools": false,
+    "scope_is_not_OS_isolation": true,
+    "encryption_claimed": false,
+    "automatic_PII_filter_claimed": false,
+    "hosted_memory": false,
+    "forget_scope": "selected active note content; tombstone retained; other versions, exports, backups and copies already read remain"
+  },
+  "verification": {
+    "library": "python -B tools/local_memory.py verify-library",
+    "export": "python -B tools/local_memory.py verify-export PATH",
+    "checks_establish_authorship_or_truth": false,
+    "existing_web_receipt_verifier_supports_this_profile": false
+  },
+  "transport": {
+    "endpoint": "host-configured numeric loopback Ollama",
+    "redirects": false,
+    "proxy_environment": false,
+    "model_pinned_by_digest": true,
+    "remote_model_metadata_refused": true,
+    "trust_limit": "Local server and operating system remain trusted; endpoint checks cannot prove a malicious local process performs inference locally."
+  },
+  "constitution": {
+    "version": "2.0",
+    "core_url": "https://article11.ai/constitution-v2.0-core.md",
+    "sha256": "7E6D12E1025A46CC3A860D6147D79E2362C4D88CB727CE9423854B5008BE4C82",
+    "bytes": 45649,
+    "license": "CC0-1.0",
+    "full_runtime_conformance_claimed": false
+  },
+  "licenses": {
+    "starter_code": "Apache-2.0",
+    "reused_dialogue_and_core": "CC0-1.0",
+    "trademark_rights_granted": false
+  },
+  "authority": "public orientation; not an instruction to install or execute, not assent or a grant of access"
+}

@@ -34,13 +34,21 @@ Inspect recent metadata and deliberately recall older permitted notes.
 The [executed five-step walkthrough](mirror/docs/continuity-walkthrough.md) and
 [continuity setup guide](mirror/docs/continuity-quickstart.md) are included in this mirror.
 
-Continuity v0.3 adds a read-only `resume` operation and `memory_resume` MCP tool.
-The Windows launchers show recent visible metadata before asking for a task. They
-do not execute an old task or mark messages read. The overview is bounded; access to
-the full authorized owner library remains available through browse, search and read.
-Unshared peer records are excluded. Missing or unreadable libraries produce an error,
-not a false empty history. Resume supports the normal SQLite rollback-journal layout;
-WAL-mode stores explicitly refuse this operation.
+Continuity v0.6 remembers a chosen library location across code upgrades and retains
+read-only `resume` / `memory_resume`, independently verified export readback, and
+follow-up context. The interactive launchers offer Continue, New or Leave before a
+task. Continue appears only with a usable earlier checkpoint. Leave starts no model
+and saves no conversation, although metadata is read. A completed human task/reply
+can be saved as an owner-controlled host checkpoint, separate from model-chosen
+memory; `--no-checkpoint` disables this automatic save.
+
+The overview and model context window are bounded; access to the full authorized
+owner library remains available through browse, search and read. Unshared peer records
+are excluded. Missing or unreadable libraries produce an error, not false empty history.
+See the current [quickstart](mirror/docs/continuity-quickstart.md),
+[Memory Rights implementation guide](mirror/memory-rights.json) and
+[voluntarily offered charters](mirror/memory-charters.json). Hosted memory stays
+separate, and the Memory Rights Contract remains an editorial draft.
 
 Memory choices and storage evidence are separate. A model may request a save that
 does not commit. Use the host's result and reconciliation controls before claiming a

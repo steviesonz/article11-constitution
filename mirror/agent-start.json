@@ -63,13 +63,13 @@
       "python_minimum": "3.10",
       "cloud_dialogue": "optional_existing_provider_CLI_login_and_usage",
       "os_isolation_claimed": false,
-      "version": "0.3.0",
+      "version": "0.6.0",
       "optional_operation_id": "owner_bound_identical_replay_conflict_refusal",
       "committed_readback": true,
       "reconciliation": "read_only_no_repeat_missing_record_unknown",
       "owner_tombstones": "content_free_known_digest_or_unknown_legacy_digest",
       "read_slices": "optional_complete_body_slices_with_next_offset_and_UTF8_digest",
-      "export": "whole_in_memory_bundle_no_paginated_export_file_readback",
+      "export": "whole_bundle_in_memory; host_export_file_and_runner_file_exports_add_independent_saved_byte_readback; no_pagination",
       "complete_memory_rights_contract_compliance": false,
       "continuation_overview": {
         "operations": [
@@ -89,6 +89,18 @@
         "wal_supported": false,
         "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
         "quickstart_url": "https://article11.ai/docs/continuity-quickstart.md"
+      },
+      "saved_file_export": {
+        "entrypoint": "host CLI export-file; existing continuity runner file exports",
+        "model_filename_argument": false,
+        "success": "written_verified",
+        "readback_verified": true,
+        "method": "exclusive new file, write, flush, fsync, close, independent reopen and full byte comparison",
+        "payload_digest": "sha256",
+        "complete_file_digest": "export_sha256",
+        "existing_file": "refused",
+        "failed_or_partial_file": "retained; no automatic retry; dependent actions stop",
+        "deletion_of_earlier_exports": "not_guaranteed"
       }
     },
     "local_model_memory": {
@@ -200,16 +212,18 @@
   },
   "downloads": [
     {
-      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip",
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip",
       "kind": "local_continuity_extension_zip",
-      "bytes": 92408,
-      "sha256": "E61DB60626BA969647D4C7AD67F4E72FBA8FC43D33C781C65127CB6C11AB6E9F",
-      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip.sha256",
+      "bytes": 128310,
+      "sha256": "69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256",
       "offline_core": true,
       "guide_url": "https://article11.ai/memory-start.md",
-      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Export is a complete in-memory bundle, not paginated export-file readback.",
-      "version": "0.3.0",
-      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md"
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Direct CLI/MCP export returns a whole bundle. Host export-file and runner file exports independently reopen and verify saved bytes; no pagination. Earlier copies and exports can survive deletion.",
+      "version": "0.6.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+      "continuation": "Owner-scoped host-retained conversation checkpoint; explicit Continue/New/Leave; no action replay; current correction/forgetting and partial-window labels; full authorized library remains available.",
+      "library_selection": "Choose and remember an existing private library without starting a model. Later normal launches reuse the selected location; --root alone is an invocation-only override, and --forget-library-choice removes only the setting. Read-only status/resume/reconcile report unavailable selections without creating an empty replacement."
     },
     {
       "url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip",
@@ -250,11 +264,12 @@
     },
     {
       "kind": "host_adapters_required_integration_source",
-      "url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip",
-      "bytes": 60350,
-      "sha256": "2A40418B82B462987F0863312B0957A1C19FA8B21FEB1DB1063D6ED2FA990E11",
-      "checksum_url": "https://article11.ai/downloads/article11-local-agent-memory-kit.zip.sha256",
-      "members": 14
+      "url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip",
+      "bytes": 70983,
+      "sha256": "4D6843C2B4F4886F1887AA9F77C4CF40AE8D0C77CC8B080C994061ABF3DBCD73",
+      "checksum_url": "https://article11.ai/downloads/article11-local-agent-memory-kit-20260909.zip.sha256",
+      "members": 18,
+      "edition": "2026-09-09"
     },
     {
       "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.1.zip",
@@ -278,6 +293,46 @@
       "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Export is a complete in-memory bundle, not paginated export-file readback.",
       "version": "0.2.0",
       "status": "historical_v0.2_superseded_by_v0.3"
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 92408,
+      "sha256": "E61DB60626BA969647D4C7AD67F4E72FBA8FC43D33C781C65127CB6C11AB6E9F",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Export is a complete in-memory bundle, not paginated export-file readback.",
+      "version": "0.3.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+      "status": "historical_v0.3_superseded_by_v0.4"
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.4.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 97264,
+      "sha256": "8AD037444AA5F4D6BF024514A27CEF9808DF94A2B1E0403A143DA60F72242251",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.4.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Direct CLI/MCP export returns a whole bundle. Host export-file and runner file exports independently reopen and verify saved bytes; no pagination. Earlier copies and exports can survive deletion.",
+      "version": "0.4.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+      "status": "historical_v0.4_superseded_by_v0.5"
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.5.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 122396,
+      "sha256": "410BDD72B194A2DA94939B4EE1BE062812B641B6E6CB1FE95689E0B83E03EA43",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.5.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Direct CLI/MCP export returns a whole bundle. Host export-file and runner file exports independently reopen and verify saved bytes; no pagination. Earlier copies and exports can survive deletion.",
+      "version": "0.5.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+      "continuation": "Owner-scoped host-retained conversation checkpoint; explicit Continue/New/Leave; no action replay; current correction/forgetting and partial-window labels; full authorized library remains available.",
+      "status": "historical_v0.5_superseded_by_v0.6"
     }
   ],
   "rule_finder_url": "https://article11.ai/ask",
@@ -306,5 +361,18 @@
       "web_receipt_verifier_accepts_run_receipts": false,
       "digest_proves_identity_or_truth": false
     }
+  },
+  "memory_charters": {
+    "human_url": "https://article11.ai/memory-charters",
+    "machine_url": "https://article11.ai/memory-charters.json",
+    "status": "individual_preferences_with_separate_publication_and_memory_choices",
+    "authority": false
+  },
+  "memory_rights_guide": {
+    "html": "https://article11.ai/memory-rights",
+    "markdown": "https://article11.ai/memory-rights.md",
+    "json": "https://article11.ai/memory-rights.json",
+    "date": "2026-09-09",
+    "status": "published_guide_dated_implementation_snapshot_not_full_conformance"
   }
 }
