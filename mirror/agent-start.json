@@ -63,7 +63,7 @@
       "python_minimum": "3.10",
       "cloud_dialogue": "optional_existing_provider_CLI_login_and_usage",
       "os_isolation_claimed": false,
-      "version": "0.6.0",
+      "version": "0.6.1",
       "optional_operation_id": "owner_bound_identical_replay_conflict_refusal",
       "committed_readback": true,
       "reconciliation": "read_only_no_repeat_missing_record_unknown",
@@ -101,7 +101,8 @@
         "existing_file": "refused",
         "failed_or_partial_file": "retained; no automatic retry; dependent actions stop",
         "deletion_of_earlier_exports": "not_guaranteed"
-      }
+      },
+      "stdin_patch": "Accepts one initial UTF-8 BOM after unchanged input size checks; JSON grammar and owner checks unchanged"
     },
     "local_model_memory": {
       "availability": "downloadable_local_starter",
@@ -212,18 +213,19 @@
   },
   "downloads": [
     {
-      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip",
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip",
       "kind": "local_continuity_extension_zip",
-      "bytes": 128310,
-      "sha256": "69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4",
-      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256",
+      "bytes": 130951,
+      "sha256": "0147558D239970EE219F8AD4EC0908B02F155473BBF3ACDA393209CC22C14707",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256",
       "offline_core": true,
       "guide_url": "https://article11.ai/memory-start.md",
       "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Direct CLI/MCP export returns a whole bundle. Host export-file and runner file exports independently reopen and verify saved bytes; no pagination. Earlier copies and exports can survive deletion.",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
       "continuation": "Owner-scoped host-retained conversation checkpoint; explicit Continue/New/Leave; no action replay; current correction/forgetting and partial-window labels; full authorized library remains available.",
-      "library_selection": "Choose and remember an existing private library without starting a model. Later normal launches reuse the selected location; --root alone is an invocation-only override, and --forget-library-choice removes only the setting. Read-only status/resume/reconcile report unavailable selections without creating an empty replacement."
+      "library_selection": "Choose and remember an existing private library without starting a model. Later normal launches reuse the selected location; --root alone is an invocation-only override, and --forget-library-choice removes only the setting. Read-only status/resume/reconcile report unavailable selections without creating an empty replacement.",
+      "patch_note": "Version 0.6.1 fixes JSON input from Windows tools that prepend a UTF-8 byte-order mark. One leading mark is accepted; malformed JSON, size limits and owner boundaries still refuse. Existing libraries and memory formats are unchanged."
     },
     {
       "url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip",
@@ -333,6 +335,21 @@
       "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
       "continuation": "Owner-scoped host-retained conversation checkpoint; explicit Continue/New/Leave; no action replay; current correction/forgetting and partial-window labels; full authorized library remains available.",
       "status": "historical_v0.5_superseded_by_v0.6"
+    },
+    {
+      "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip",
+      "kind": "historical_continuity_extension_zip",
+      "bytes": 128310,
+      "sha256": "69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4",
+      "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256",
+      "offline_core": true,
+      "guide_url": "https://article11.ai/memory-start.md",
+      "limit": "Local code; no private data, hosted account, complete 2.0 kernel, full Memory Rights Contract compliance or OS isolation. Optional cloud dialogue sends authorized context to its provider. Direct CLI/MCP export returns a whole bundle. Host export-file and runner file exports independently reopen and verify saved bytes; no pagination. Earlier copies and exports can survive deletion.",
+      "version": "0.6.0",
+      "walkthrough_url": "https://article11.ai/docs/continuity-walkthrough.md",
+      "continuation": "Owner-scoped host-retained conversation checkpoint; explicit Continue/New/Leave; no action replay; current correction/forgetting and partial-window labels; full authorized library remains available.",
+      "library_selection": "Choose and remember an existing private library without starting a model. Later normal launches reuse the selected location; --root alone is an invocation-only override, and --forget-library-choice removes only the setting. Read-only status/resume/reconcile report unavailable selections without creating an empty replacement.",
+      "status": "historical_v0.6_superseded_by_v0.6.1"
     }
   ],
   "rule_finder_url": "https://article11.ai/ask",

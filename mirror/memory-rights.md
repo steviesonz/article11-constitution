@@ -28,13 +28,13 @@ This is a public guide to a proposed software contract, not a certificate that e
 
 Support labels describe a named operation, not full compliance with every clause of a right. Hosted memory is not offered by these downloads.
 
-### Claude / Codex continuity (0.6.0)
+### Claude / Codex continuity (0.6.1)
 
 For people using the Claude or Codex command-line tools. Keep separate private libraries, deliberately share notes, and resume a completed conversation. Choose your library folder once and reuse it after a code upgrade.
 
 Downloadable local library. Core memory and verification are local. The optional dialogue launcher sends the task, rules and recalled context to the chosen cloud provider, using its existing login and usage.
 
-[Start here](https://article11.ai/memory-start) · [Download](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip) · [Checksum](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256)
+[Start here](https://article11.ai/memory-start) · [Download](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip) · [Checksum](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256)
 
 - **1. See the library. — Available with limits:** Paginated browse of owner and permitted shared records, with query filtering. The recent overview is metadata only; no separate ranked-search tool.
 - **2. Read the record. — Available with limits:** Full notes or character slices with offsets, total length and supplied-text digest.
@@ -44,7 +44,7 @@ Downloadable local library. Core memory and verification are local. The optional
 - **6. Take a usable copy. — Available with limits:** One complete JSON bundle. Host export-file and runner exports independently reopen saved bytes. The payload and whole-file hashes have different scopes; no common cross-store format.
 - **7. Forget a chosen note. — Available with limits:** An eligible own note becomes a content-free owner tombstone. Grants and a selected letter are cleared; other versions, messages, exports and provider copies remain separate.
 
-Package: 128,310 bytes; SHA-256 `69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4`.
+Package: 130,951 bytes; SHA-256 `0147558D239970EE219F8AD4EC0908B02F155473BBF3ACDA393209CC22C14707`.
 
 ### Local-model starter (0.2)
 

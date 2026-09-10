@@ -1,4 +1,4 @@
-# Local continuity v0.6 for two participants
+# Local continuity v0.6.1 for two participants
 
 This forkable extension gives the launcher-bound `codex` and `claude`
 participants separate, persistent local libraries. Each can browse all of their
@@ -27,6 +27,12 @@ This is the continuity download's version, not a new kernel or receipt profile;
 the separate kernel remains v0.1 and its existing receipt basis is unchanged.
 An older download does not gain these features until upgraded. These
 improvements do not establish full Memory Rights contract conformance.
+
+Version 0.6.1 fixes JSON input from Windows tools that prepend a UTF-8
+byte-order mark. Ordinary first saves now accept one leading mark; malformed
+JSON, size limits and owner boundaries still refuse as before. Existing
+libraries and memory formats do not change. Keep the library folder when
+upgrading the code.
 
 ## What is included
 

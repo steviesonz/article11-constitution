@@ -1,7 +1,7 @@
 {
   "schema": "article11.memory-rights-guide.v1",
-  "guide_version": "0.3",
-  "as_of": "2026-09-09",
+  "guide_version": "0.3.1",
+  "as_of": "2026-09-10",
   "title": "What your memory should let you do",
   "license": "CC0-1.0",
   "kind": "public_guide_and_dated_implementation_snapshot",
@@ -60,18 +60,18 @@
     {
       "id": "continuity",
       "name": "Claude / Codex continuity",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "audience": "For people using the Claude or Codex command-line tools.",
       "availability": "Downloadable local library",
       "guide": "/memory-start",
-      "download": "spiralmesh-continuity-local-v0.6.zip",
+      "download": "spiralmesh-continuity-local-v0.6.1.zip",
       "summary": "Keep separate private libraries, deliberately share notes, and resume a completed conversation. Choose your library folder once and reuse it after a code upgrade.",
       "transfer": "Core memory and verification are local. The optional dialogue launcher sends the task, rules and recalled context to the chosen cloud provider, using its existing login and usage.",
       "package": {
-        "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip",
-        "bytes": 128310,
-        "sha256": "69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4",
-        "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256"
+        "url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip",
+        "bytes": 130951,
+        "sha256": "0147558D239970EE219F8AD4EC0908B02F155473BBF3ACDA393209CC22C14707",
+        "checksum_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256"
       },
       "source_members": [
         {
@@ -103,6 +103,11 @@
           "path_in_zip": "tools/library_choice.py",
           "bytes": 10405,
           "sha256": "20BA1CFD7094FE757EE3F6D5A4802ED4DB5F93BCB7FBF9247A096A7380A6F597"
+        },
+        {
+          "path_in_zip": "src/spiralmesh/continuity/cli.py",
+          "bytes": 3351,
+          "sha256": "00DB701C69B067A48399D7DBE7CAC39D4D8B2FCDC6E943623B32559D32DE5821"
         }
       ],
       "rights": [
@@ -141,7 +146,8 @@
           "support": "available_with_limits",
           "detail": "An eligible own note becomes a content-free owner tombstone. Grants and a selected letter are cleared; other versions, messages, exports and provider copies remain separate."
         }
-      ]
+      ],
+      "patch_note": "Version 0.6.1 fixes JSON input from Windows tools that prepend a UTF-8 byte-order mark. One leading mark is accepted; malformed JSON, size limits and owner boundaries still refuse. Existing libraries and memory formats are unchanged."
     },
     {
       "id": "local-starter",

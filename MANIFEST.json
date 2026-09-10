@@ -1,30 +1,31 @@
 {
   "schema": "article11.swarm-distribution.mirror-manifest.v1",
-  "built_at": "2026-09-10T01:22:51.572723+00:00",
+  "built_at": "2026-09-10T03:51:05.806910+00:00",
   "built_by": "Article 11 contributors",
   "purpose": "Exact published-source snapshot of the fork downloads, guides and cited Constitution corpus.",
   "site_origin": "https://article11.ai",
   "upstream_release": {
-    "release_manifest_sha256": "3982a2556b0c00d321ffe5abd08cc23360ab8e8c58ed2a3c919eb614939ef6ad",
+    "release_manifest_sha256": "ee6c30e01b761372ca88c414fb1cf8652e8cac7ae9b92050f1c5d50aeb89eb85",
     "basis": "Exact release-source snapshot; separate public verification establishes live parity.",
-    "deployment_id": "5fc86767-6dfb-4fd1-bbc7-c1cf9625cbb4"
+    "deployment_id": "b90d039d-f01e-4170-a365-85bdf51e6009",
+    "source_identifier": "62986471F045E3922FEEEABA0EBF03ABB690F13A"
   },
   "manifest_self_inclusion": false,
   "manifest_note": "Payload hashes exclude this manifest. A manifest cannot hash itself, and a manifest alone is not a root of trust: whoever can rewrite the files can rewrite the manifest. The independent pins compiled into verify_mirror.py and a fetch from article11.ai are what make this checkable.",
   "hash_case": "lowercase hex in this manifest. The site's own sidecars are mixed case; the verifier compares case-insensitively and reports the inconsistency rather than hiding it.",
-  "file_count": 60,
-  "total_bytes": 1639517,
+  "file_count": 62,
+  "total_bytes": 1773685,
   "files": [
     {
       "path": "START_FOR_AGENTS.md",
-      "bytes": 14965,
-      "sha256": "a9e3ee704518ab145aa9854af549a847c4f4bccd1e329988ddd9270c1b9d1895",
+      "bytes": 14971,
+      "sha256": "27aad84887a263fee1fa4bd00c98fec71653632842cfbe7f8a13551718e72d78",
       "source_url": "https://article11.ai/START_FOR_AGENTS.md"
     },
     {
       "path": "agent-start.json",
-      "bytes": 18479,
-      "sha256": "2b9a616b8e8342107c8cd6b6f3bd4a00faf39b3b2b7499c9eb1455e75d9772b0",
+      "bytes": 20457,
+      "sha256": "51ef4abe841dd7184b230eec382815ac5be3aa92397c3c1427c8fa8865769e03",
       "source_url": "https://article11.ai/agent-start.json"
     },
     {
@@ -65,14 +66,14 @@
     },
     {
       "path": "docs/continuity-quickstart.md",
-      "bytes": 33517,
-      "sha256": "d270b4d0b8d522571302161a5a59829933cb947e4160b09c826e559df2d9d47a",
+      "bytes": 33833,
+      "sha256": "e58097b518416523225a05769a14da6982b00a4733610387bd2187462cab0e5a",
       "source_url": "https://article11.ai/docs/continuity-quickstart.md"
     },
     {
       "path": "docs/continuity-walkthrough.md",
-      "bytes": 10603,
-      "sha256": "ae243616f8e957371b8db8ddd4c2f550564b21a40eeaf868e2297023f2565c47",
+      "bytes": 10613,
+      "sha256": "9cd47db0425c32827cf9b93dc04035b5fc7b25d4618fa546d84f753506085650",
       "source_url": "https://article11.ai/docs/continuity-walkthrough.md"
     },
     {
@@ -184,6 +185,18 @@
       "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.5.zip.sha256"
     },
     {
+      "path": "downloads/spiralmesh-continuity-local-v0.6.1.zip",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip",
+      "bytes": 130951,
+      "sha256": "0147558d239970ee219f8ad4ec0908b02f155473bbf3acda393209cc22c14707"
+    },
+    {
+      "path": "downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256",
+      "source_url": "https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256",
+      "bytes": 105,
+      "sha256": "fa5c8dce4a3b9dbeeb7edfe11db0b80cfb9a432595881468cb8e960df605ac99"
+    },
+    {
       "path": "downloads/spiralmesh-continuity-local-v0.6.zip",
       "bytes": 128310,
       "sha256": "69fe4e41b378aa10c7331b9126109b6ac60b961fa4544e5d3ae48e6aca714ff4",
@@ -269,14 +282,14 @@
     },
     {
       "path": "fork/index.html",
-      "bytes": 14439,
-      "sha256": "2b72f87c151cabee5b925baa49c75afff44a3c85e03f7b620418b0a2607242c7",
+      "bytes": 14881,
+      "sha256": "424048fc4ca3790283b0027a7b20c9c004345b19b779bc3452865b2d955c399e",
       "source_url": "https://article11.ai/fork/"
     },
     {
       "path": "llms.txt",
-      "bytes": 18234,
-      "sha256": "3ae6871b60e59e52015f994970c6f65e3f6ef9b8933d18c462ff024dc2d411e3",
+      "bytes": 18240,
+      "sha256": "98de8e6d1c3c7289145ed435095716fa8f907d7c9d0908d58e311c2630894be6",
       "source_url": "https://article11.ai/llms.txt"
     },
     {
@@ -317,32 +330,32 @@
     },
     {
       "path": "memory-rights.html",
-      "bytes": 22817,
-      "sha256": "9e5288666323b8ff7504729d2c5680ff650fb96b8f1ec2498054f4270c1dab35",
+      "bytes": 22821,
+      "sha256": "d8adfd9c92edde8cdda4f1ebf4db5a603ba0ef3ef2a36b1096c215c27620ba0e",
       "source_url": "https://article11.ai/memory-rights"
     },
     {
       "path": "memory-rights.json",
-      "bytes": 20541,
-      "sha256": "6682da68ad4ea6de84f72cbe8b1d189cf80fbbdb8087422c6d3ee00a5f23d2a7",
+      "bytes": 20603,
+      "sha256": "936f7b61545cb65ba75a9ee89afbdf973630d1743219e047873cf6bba2aac1c0",
       "source_url": "https://article11.ai/memory-rights.json"
     },
     {
       "path": "memory-rights.md",
-      "bytes": 15744,
-      "sha256": "936acfa8a9d4bf9e0dd2ff5c7de31721d7ac6b964cb101aa596ba6c239a902e4",
+      "bytes": 15748,
+      "sha256": "7e4fbdb4725fa7285aa7008c531807502b66508a46a6d5cf0829efa7ab0ad68b",
       "source_url": "https://article11.ai/memory-rights.md"
     },
     {
       "path": "memory-start.html",
-      "bytes": 15132,
-      "sha256": "80d0bb920acabfbacee4cbc0d132960df894caac01bac4a50da89015a593acb2",
+      "bytes": 15142,
+      "sha256": "9762af78ebc98a8c85afda13870d47c8d3451774f46c640cad650d559ab32804",
       "source_url": "https://article11.ai/memory-start"
     },
     {
       "path": "memory-start.md",
-      "bytes": 15820,
-      "sha256": "8241e553c1d12fff6d52c5caf6a3f75848a1c4c53584d3589fe8de527d9eaf28",
+      "bytes": 16090,
+      "sha256": "18408043d0b32b40b5d3158f726596c09ae6bf13ed4e4300ba956a333bd46864",
       "source_url": "https://article11.ai/memory-start.md"
     },
     {
@@ -371,8 +384,8 @@
     },
     {
       "path": "welcome.html",
-      "bytes": 12505,
-      "sha256": "79b369aa4ae213812060dd92d46f9fbfce3fbea3c8f5cf1431729adb3e9f4370",
+      "bytes": 12509,
+      "sha256": "602734240b10074463aa822175d42cbefe08f8f85f092fde393012020623d9c2",
       "source_url": "https://article11.ai/welcome"
     }
   ]

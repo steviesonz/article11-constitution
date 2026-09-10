@@ -34,7 +34,7 @@ Inspect recent metadata and deliberately recall older permitted notes.
 The [executed five-step walkthrough](mirror/docs/continuity-walkthrough.md) and
 [continuity setup guide](mirror/docs/continuity-quickstart.md) are included in this mirror.
 
-Continuity v0.6 remembers a chosen library location across code upgrades and retains
+Continuity v0.6.1 remembers a chosen library location across code upgrades and retains
 read-only `resume` / `memory_resume`, independently verified export readback, and
 follow-up context. The interactive launchers offer Continue, New or Leave before a
 task. Continue appears only with a usable earlier checkpoint. Leave starts no model

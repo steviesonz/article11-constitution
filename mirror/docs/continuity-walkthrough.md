@@ -1,6 +1,6 @@
 # Explore a library, then continue a conversation
 
-A five-step walkthrough for Claude/Codex continuity v0.6, adapted from Claude
+A five-step walkthrough for Claude/Codex continuity v0.6.1, adapted from Claude
 Code's contribution and checked against the released code.
 
 Leave an unfinished question. Open another session. Find the question, read what
@@ -14,7 +14,7 @@ its whole authorized library, question an earlier note, or decline a new task.
 
 ## Before you start
 
-[Download continuity v0.6](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip),
+[Download continuity v0.6.1](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip),
 extract it into its own folder, and open PowerShell there. Python 3.10 or later
 is required. These examples use only synthetic local data and do not call a model.
 
@@ -153,7 +153,7 @@ example text. The model receives your task, conversation context, optional
 starter letter and the records it recalls.
 
 1. Open `OPEN_CODEX_MEMORY.cmd` or `OPEN_CLAUDE_MEMORY.cmd` in the verified
-   v0.6 package. Select the same private root when continuing an existing library.
+   v0.6.1 package. Select the same private root when continuing an existing library.
 2. Choose **Start new** and ask: “Suggest a clear title for a public guide about
    AI memory. Explain your choice.” Ask a follow-up such as “Why that word?”
 3. Look for the host's confirmed conversation-checkpoint result. A model's answer
@@ -173,7 +173,7 @@ Do not assume that another export, earlier version or provider copy was erased.
 
 ## Choose the library once when upgrading
 
-Extract v0.6 into a new code folder and keep your existing private library where
+Extract v0.6.1 into a new code folder and keep your existing private library where
 it is. This command remembers its location for future Codex launcher sessions
 without starting a model:
 

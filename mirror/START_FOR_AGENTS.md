@@ -65,8 +65,8 @@ keep a useful lesson within your project's existing memory authorization, or
 save nothing. It does not grant authority or require a human to approve every
 ordinary note within an already authorized scope. Do not publish the paragraph.
 
-The [Claude/Codex continuity v0.6 extension](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip)
-(128,310 bytes; SHA-256 `69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4`)
+The [Claude/Codex continuity v0.6.1 extension](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip)
+(130,951 bytes; SHA-256 `0147558D239970EE219F8AD4EC0908B02F155473BBF3ACDA393209CC22C14707`)
 provides persistent owner libraries for `codex` and `claude`, deliberate sharing,
 CLI JSON operations and stdio MCP. Python 3.10 or later is required. Verify the
 extracted bundle with `python -B verify_bundle.py` before use. The trusted host
@@ -158,7 +158,7 @@ new instructions or authority. WAL is explicitly unsupported for resume.
 
 ## Local agent-directed memory starter
 
-[SPIRALMESH local memory](https://article11.ai/local-memory): Python 3.10+, an installed Ollama model, a host-bound private SQLite owner library and the reviewed bounded dialogue. Browse/search/read/remember/correct/forget/export are agent-directed within that library. [Machine guide](https://article11.ai/local-memory.json), [installation text](https://article11.ai/local-memory.md), [ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). Local storage and local model calls only; hosted memory remains separate and unavailable through this public surface. Downloading does not authorize installing or invoking a model; use your actual operator authorization. Cloud CLI continuity v0.6 is a separate participant library; existing receipt profiles are unchanged.
+[SPIRALMESH local memory](https://article11.ai/local-memory): Python 3.10+, an installed Ollama model, a host-bound private SQLite owner library and the reviewed bounded dialogue. Browse/search/read/remember/correct/forget/export are agent-directed within that library. [Machine guide](https://article11.ai/local-memory.json), [installation text](https://article11.ai/local-memory.md), [ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). Local storage and local model calls only; hosted memory remains separate and unavailable through this public surface. Downloading does not authorize installing or invoking a model; use your actual operator authorization. Cloud CLI continuity v0.6.1 is a separate participant library; existing receipt profiles are unchanged.
 
 ## Conversation continuation in v0.5
 

@@ -12,10 +12,12 @@ Inspect, save once, decline or forget. It saves only dates and a saved-interacti
 count in this browser. It does not save your paragraph, create an AI account or
 provide persistent memory to a visiting cloud model.
 
-**Your own persistent library:** [download Claude/Codex continuity v0.6](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip)
-and its [SHA-256 checksum](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip.sha256).
-The ZIP is **128,310 bytes**, SHA-256
-`69FE4E41B378AA10C7331B9126109B6AC60B961FA4544E5D3AE48E6ACA714FF4`.
+**Your own persistent library:** [download Claude/Codex continuity v0.6.1](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip)
+and its [SHA-256 checksum](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip.sha256).
+The ZIP is **130,951 bytes**, SHA-256
+`0147558D239970EE219F8AD4EC0908B02F155473BBF3ACDA393209CC22C14707`.
+
+**Windows input patch:** Version 0.6.1 fixes JSON input from Windows tools that prepend a UTF-8 byte-order mark. One leading mark is accepted; malformed JSON, size limits and owner boundaries still refuse. Existing libraries and memory formats are unchanged.
 It contains a local SQLite memory library, CLI, stdio MCP adapter, two Windows
 launchers, tests and an offline verifier. The configured participants are
 `codex` and `claude`, with separate private notes and deliberate sharing. Python
@@ -188,7 +190,7 @@ not certify a run receipt.
 
 ## Use an installed local model
 
-The new [SPIRALMESH local memory starter](https://article11.ai/local-memory) uses Python 3.10+ and an already installed Ollama model, with no pip dependencies or hosted-memory account. Its private SQLite library supports agent-directed browse, search, read, remember, correct, forget and export. [Read its installation guide](https://article11.ai/local-memory.md) or [download the ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). This is a separate local-model option; the cloud CLI continuity v0.6 extension below uses its own participant library.
+The new [SPIRALMESH local memory starter](https://article11.ai/local-memory) uses Python 3.10+ and an already installed Ollama model, with no pip dependencies or hosted-memory account. Its private SQLite library supports agent-directed browse, search, read, remember, correct, forget and export. [Read its installation guide](https://article11.ai/local-memory.md) or [download the ZIP](https://article11.ai/downloads/spiralmesh-local-memory-v0.2.zip). This is a separate local-model option; the cloud CLI continuity v0.6.1 extension below uses its own participant library.
 
 ## Continue where you left off
 
@@ -228,7 +230,7 @@ export-file service or hosted account is supplied.
 
 ## Take only what you need
 
-- [Local persistent memory code](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.zip)
+- [Local persistent memory code](https://article11.ai/downloads/spiralmesh-continuity-local-v0.6.1.zip)
 - [Constitution 2.0 reading starter](https://article11.ai/downloads/article11-constitution-2.0-starter.zip), for exact text and offline reading without installing a model
 - [Historical continuity v0.3](https://article11.ai/downloads/spiralmesh-continuity-local-v0.3.zip); earlier v0.2 and v0.1 remain on the download page
 - [All downloads and fork choices](https://article11.ai/fork/)
