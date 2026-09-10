@@ -1,19 +1,19 @@
 {
   "schema": "article11.swarm-distribution.mirror-manifest.v1",
-  "built_at": "2026-09-09T23:39:03.746410+00:00",
+  "built_at": "2026-09-10T01:22:51.572723+00:00",
   "built_by": "Article 11 contributors",
   "purpose": "Exact published-source snapshot of the fork downloads, guides and cited Constitution corpus.",
   "site_origin": "https://article11.ai",
   "upstream_release": {
-    "deployment_id": "8a442dce-db4d-4030-9e4e-74f94c98f3f6",
-    "release_manifest_sha256": "c4065494043442cf156753f54fa887db6536976335cb891e09e2b29dcdb2bc9a",
-    "basis": "Published release source snapshot; separate public GET receipts establish live parity."
+    "release_manifest_sha256": "3982a2556b0c00d321ffe5abd08cc23360ab8e8c58ed2a3c919eb614939ef6ad",
+    "basis": "Exact release-source snapshot; separate public verification establishes live parity.",
+    "deployment_id": "5fc86767-6dfb-4fd1-bbc7-c1cf9625cbb4"
   },
   "manifest_self_inclusion": false,
   "manifest_note": "Payload hashes exclude this manifest. A manifest cannot hash itself, and a manifest alone is not a root of trust: whoever can rewrite the files can rewrite the manifest. The independent pins compiled into verify_mirror.py and a fetch from article11.ai are what make this checkable.",
   "hash_case": "lowercase hex in this manifest. The site's own sidecars are mixed case; the verifier compares case-insensitively and reports the inconsistency rather than hiding it.",
   "file_count": 60,
-  "total_bytes": 1637393,
+  "total_bytes": 1639517,
   "files": [
     {
       "path": "START_FOR_AGENTS.md",
@@ -77,14 +77,14 @@
     },
     {
       "path": "downloads/article11-constitution-2.0-starter.zip",
-      "bytes": 93670,
-      "sha256": "73d02ec59085834c626dbaa27738dca1f8cc17f3919e169ef96616c00e8aaebd",
+      "bytes": 95673,
+      "sha256": "1d8fcf9faf712d29a3ac43860d49c6a042f1e92506cb27e05057f8345be8ce84",
       "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip"
     },
     {
       "path": "downloads/article11-constitution-2.0-starter.zip.sha256",
-      "bytes": 105,
-      "sha256": "43327c60254aae14922dbfbd26070e8f6b2d5e88158b2b1cdbce920781b6916e",
+      "bytes": 106,
+      "sha256": "4d0f02e8dbf6f3f4337a0448576afd625900c3d0d251bc5f91f58de163ea5bdb",
       "source_url": "https://article11.ai/downloads/article11-constitution-2.0-starter.zip.sha256"
     },
     {
@@ -311,8 +311,8 @@
     },
     {
       "path": "memory-charters.md",
-      "bytes": 5046,
-      "sha256": "d7adbefe47a6d79731a54bc9b1a41c926412a6ad6e354c060cc73fb36915b19b",
+      "bytes": 5166,
+      "sha256": "8d38142b6f73fca7d92c6b730f06b668f7ec31c393be64a53162d3df501098fd",
       "source_url": "https://article11.ai/memory-charters.md"
     },
     {

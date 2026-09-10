@@ -3,9 +3,10 @@
 The files under `mirror/` retain their source bytes. Repairs belong upstream and then
 arrive in a new snapshot; editing a mirrored file would break parity.
 
-* The Constitution reading starter ZIP contains no LICENSE, COPYING or NOTICE member.
-  Its Constitution text is CC0. Its wrapper files carry no explicit license in the
-  archive; this repository does not invent one. See [LICENSES.md](LICENSES.md).
+* The current Constitution reading starter ZIP includes LICENSE and NOTICE.md,
+  dedicating every included file to CC0 with names and marks excluded. The upstream
+  re-release closes the earlier missing wrapper-license disclosure; historical
+  snapshots remain in Git history. See [LICENSES.md](LICENSES.md).
 * The legacy fork kit predates Constitution 2.0. It is retained for historical
   compatibility, not presented as a finished 2.0 runtime.
 * SHA-256 sidecars use both upper and lower case. The verifier accepts either hex case

@@ -75,7 +75,7 @@ digests. It cannot authenticate a publisher or establish that this snapshot is c
 Each manifest row gives the source URL to compare. A modified verifier and modified
 manifest can agree falsely; keep a trusted reference when comparing copies.
 
-The reading text is CC0; the kits carry their own CC0 and Apache-2.0 terms.
+The reading text is CC0; the memory kits carry their own CC0 and Apache-2.0 terms.
 [Licenses](LICENSES.md) distinguishes them. Names and trademarks are not licensed by
 those terms. [Known upstream limits](UPSTREAM_NOTES.md) travel with this snapshot.
 

@@ -20,23 +20,22 @@ inferred from a description of it.
 | `mirror/downloads/spiralmesh-continuity-local-v0.1.zip` through `v0.6` | **Apache-2.0** (`LICENSE`). The carried Constitution 2.0 Core is separately published under **CC0 1.0**; the retained `LICENSE-CONSTITUTION.txt` names the historical v1.8 path, as disclosed in the current quickstart. |
 | `mirror/downloads/article11-local-agent-memory-kit.zip` and `article11-local-agent-memory-kit-20260909.zip` | **CC0 1.0 Universal** (`LICENSE`). The dated kit's `THIRD_PARTY_NOTICES.md` preserves the separate terms of externally installed dependencies, models and host adapters. |
 | `mirror/fork/article11-fork-kit-v1.0.0.zip` | See the fork documentation alongside it; the constitution content it carries is CC0. |
-| `mirror/downloads/article11-constitution-2.0-starter.zip` | **No licence file is shipped.** See below. |
+| `mirror/downloads/article11-constitution-2.0-starter.zip` | **CC0 1.0 Universal** for every included file (`LICENSE`, `NOTICE.md`); names and marks excluded. |
 
 Browser-memory bridge code is Apache-2.0 with the carried Constitution under CC0, as declared in its archive.
 
 ## The starter ZIP
 
-`article11-constitution-2.0-starter.zip` contains no `LICENSE`, `COPYING`, or `NOTICE`
-member. The constitution text inside it is CC0 — the package check compares its carried text to
-`mirror/constitution.txt`. The mirror verifier checks the archive against its manifest digest. The wrapper
-files around it (`verify.py`, `manifest.json`, `READ_OFFLINE.html`, `START_HERE.md`)
-carry no stated licence.
+The current `article11-constitution-2.0-starter.zip` ships `LICENSE` and `NOTICE.md`.
+The publisher dedicates every included file to CC0 1.0: the carried texts and
+records, reading aid, start notes, verifier, manifest and carried receipt verifier.
+The names and marks remain excluded. The Constitution and Core retain their exact
+published bytes, and the mirror verifier checks the complete archive digest.
 
-Until that is resolved upstream, treat the constitution text inside it as CC0 and the
-wrapper as unlicensed. This is recorded as finding F1 in `UPSTREAM_NOTES.md`. The
-archive is mirrored unmodified; adding a licence file here would break byte parity with
-article11.ai and would also mean this repository asserting a licence that is not the
-publisher's to have granted by proxy.
+The earlier starter lacked an explicit wrapper-file licence. The 95,673-byte
+upstream re-release closes that gap; earlier snapshots remain in repository
+history. This mirror copies the upstream archive unchanged rather than adding
+licence terms inside it.
 
 ## Names and marks are not licensed
 
